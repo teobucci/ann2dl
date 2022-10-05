@@ -1,0 +1,493 @@
+%!TEX root = ../main.tex
+
+\section{CNN}
+
+Consider the following Python snippet
+\begin{python}
+import keras
+from keras.utils import np_utils
+from keras.models import Sequential, Model
+from keras.layers import Dense, Activation, Flatten, Conv2D,
+from keras.layers import MaxPooling2D, BatchNormalization
+pool_size = (2,2) # size of pooling area for max pooling
+nb_filters = 64
+
+model = Sequential()
+
+model.add(Conv2D(nb_filters, (11,11), input_shape=(64, 64, 3), padding='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size = pool_size))
+model.add(Conv2D(nb_filters*2, (5,5), padding='same')) # 2nd Conv Layer starts
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size = pool_size))
+model.add(Conv2D(nb_filters*4, (3,3), padding='same')) # 3rd Conv Layer starts
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size = pool_size))
+model.add(Conv2D(nb_filters, (1,1), padding='same'))   # 4th Conv Layer starts
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size = pool_size))
+model.add(Flatten())
+model.add(Dense(64))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(Dense(16))
+model.add(Activation('relu'))
+model.add(Dense(21))
+model.add(Activation('softmax'))
+model.summary()
+\end{python}
+
+\que{Answer the following questions providing a short explanation for each
+\begin{itemize}
+    \item Is this a classification or a regression network? How many output?
+    \item The following is the output of the \pyth{model.summary()} command. A few numbers have been replaced by dots. Please, fill all the numbers in and in particular indicate which computation you are performing to get to each number. Note: the first dimension is the batch size, and as such this is set to None.
+    \item How big is the receptive field of the pixel at the center of the feature map after the first convolutional layer? How about the pixel at the center of the second convolutional layer?
+    \item This network has relatively large filters in the first layers. Can we replace that layer with others to reduce the number of parameters and at the same time preserve (or increase) the receptive field?
+\end{itemize}
+}
+
+
+
+\que{Enumerate the building blocks of the networks you would design to build the Denoising Autoencoder as if you were going to implement it in Keras (no need to write the Keras code) and for each of them tell the number of parameters providing a short description on how you computed them, e.g., 3x5x5=45 and not just 45. (Yes you can use the calculator, but we are more interested in the formula than on the numbers) (30 Pts.)}
+
+\begin{box-stud}
+    A simple architecture would be: 6 blocks of convolution with 3 by 3 kernels and depth starting at 8 and doubling each block, followed by max pooling these would have (3x3x1x8+8)+(3x3x8x16+16)+(3x3x16x32+32)+(3x3x32x64+64)+ (3x3x64x128+128)+(3x3x128x256) parameters.
+    At this point we have a 4x4x256 tensor which represents the image, which we can flatten and pass through a first dense layer with 1024 neurons and a second one with 256 neurons, before finally arriving at the compressed representation with a third dense layer with 8 neurons. This part would have (4096*1024+1024)+(1024x256+256)+(256x8+8) parameters.
+    In the expanding branch of the network I would use the same logic and sizes, but I would ...
+\end{box-stud}
+
+\fg{0.8}{1}
+
+
+\que{Detail the building blocks in each layer of the above network. Please indicate
+\begin{itemize}
+    \item What kind of block is
+    \item What is its size
+    \item what is the overall number of parameters, together with a short description
+\end{itemize}
+on how you compute them, e.g., 3x5x5=45 (not just 45!). Consider convolutions having a spatial 3x3 extent.
+You can use the calculator, but we are more interested in the formulas than on numbers! (20 Pts.)}
+
+
+\que{This network is called denoising autoencoder and it has the goal of cleaning or restoring a damaged image. How would you train it? What kind of loss function would you use? (20 Pts.)}
+
+
+\que{What is the relationship we learn in a neural autoencoder? Why we do it? (1 Pts.)}
+
+\que{How could we size the embedding of a neural autoencoder? (1 Pts.)}
+
+\fg{0.8}{2}
+
+\que{Enumerate the building blocks of the networks as if you were going to implement it in Keras and for each of them tell the number of parameters providing a short description on how you compute them, e.g., 3x5x5=45 and not just 45. (Yes you can use the calculator, but we are more interested in the formula than on the numbers !)}
+
+\que{Can transfer learning help with the vanishing gradient issue? Why? (10 Pts.)}
+
+\que{Are autoencoders unsupervised learning models? Answer by defining what unsupervised learning is and motivate your answer accordingly. (20 Pts.)}
+
+\que{Describe a neural autoencoder and what it can be used for. (20 Pts.)}
+
+\que{Can autoencoder overfit? Motivate your answer and, in case they do, explain how to detect it. (20 Pts.)}
+
+\fg{0.8}{3}
+
+\que{Enumerate the building blocks of the above network as if you were going to implement it in Keras. For each of them tell the number of parameters providing the formula to compute them, e.g., 3x5x5=45 and not just 45. Please report any assumption you make for those information that are not provided in the picture. List each layer of the network in a different row of your answer to improve readability. (Yes you can use the calculator, but we are more interested in the formula than on the numbers!) (40 Pts.)}
+
+
+\begin{box-stud}
+The network in the picture can be summarized as follows:
+\begin{python}
+Input              # 240 * 256 * 3
+Conv2D(32,5)       # output_shape: (None, 236, 252,32)  # p = 5 * 5 * 3 * 32 + 32
+Maxpooling2D(2,2)  # output_shape: (None, 118, 126, 32) # p = 0
+Conv2D(64,5)       # output_shape: (None, 114, 122, 64) # p = 5 * 5 * 32 * 64 + 64
+Maxpooling2D(4,4)  # output_shape: (None, 28, 30, 64)   # p = 0
+                                        # Actually 114/4 = 28.5 while 122/4 = 30.51
+Conv2D(128,5)      # output_shape: (None, 24, 26, 128)  # p = 3 * 3 * 64 * 128 + 178
+Maxpooling2D(4,4)  # output_shape: (None, 6, 6, 128)
+                                        # Actually 26/4 = 6.51
+Flatten            # output_shape: (None, 4608)
+Dense              # output_shape: (None, 512)          # p = 4608 * 512 + 512
+Dense              # output_shape: (None, 256)          # p = 512 * 256 + 256
+Dense              # output_shape: (None, 2)            # p = 256 * 2 + 2
+\end{python}
+\end{box-stud}
+
+
+\begin{box-stud}
+    Assuming 3x3 filter, input to be GB and valid padding for convolutions. The dimensions are not always downscaled perfectly so I suppose a valid pad has been used. Like in the first block there is a /2 and then -2 so I suppose there is a stride = 2 3x3 conv that "leaves out" the borders and halves dimensions. In second block dimensions are down for like 4 times, so I suppose a stride =4 5x5 with always valid pad. Also in third block dimensions are downscaled so i suppose to be similar to previous block
+    Conv2D(3x3, activation=relu, stride=2) params: (3x3x3 filter + 1 bias)x32 filters = 896
+    Conv2D(3x3, activation =relu, stride=4) params: (5x5x32 filter + 1 bias)x64 filters = 51264
+    Conv2D(3x3, activation=relu, stride=4) params: (5x5x64 filter + 1 bias)x128 filters = 204928
+    Flatten0 no params (output is 4608 vector)
+    Dense(512) params: 4608x512 = 2359296
+    Dense(256) params: 512x256 = 131072
+    Dense(2) params: 256x2 = 512
+    Activation(softmax) no params
+    (softmax to have [0, 11 scores)
+\end{box-stud}
+
+
+
+\que{Illustrate the major differences between a classification and an object detection network, and what are the major advantages of these latter over baselines built upon a CNN for classification. Consider R-CNN as a reference for object detection network. Describe what are the major changes introduced by Fast R-CNN and Faster R-CNN with respect to the baseline R-CNN (30 Pts.)}
+
+
+\que{How data representation is learned via convolutional neural networks? (20 Pts.)}
+
+
+\que{Which of the following transformations are expected to affect less the output of a CNN like the one depicted the figure above?
+\begin{itemize}
+    \item rotation
+    \item translation
+    \item intensity scaling
+    \item zoom
+\end{itemize}
+How can you improve invariance to those transformations that heavily influence the CNN output? PS: The question is not related to the type of images being fed to the network, but rather to the CNN architecture itself (20 Pts.)}
+
+\begin{box-stud}
+    Probably, insensity scaling and not so relevant translation/zoom transformation are less likely to influence the output, since they do not really create new features to analyze. Rotation and good translation can instead give the CNN example of different input, which actually allows the CNN to become more robust to different images in input - and therefore to generalise better. In fact, changing the orientation of the image actually gives CNN an hint about the fact that feature are not statically present in the image, but instead are properties that can be "shifted" in the net, and be present in different areas. Therefore, the learning of CNN is not static with respect to a precise zone of the image. To learn such feature in advance, it is possible with data auqumentation to provide the net with example of these type of transformed image. Augmentation allows to apply transformation to the image without changing the label, thus increasing the dataset size (which can be useful in case of data scarcety)
+\end{box-stud}
+
+\begin{box-stud}
+    The transformations that affect less the output are rotation and translation, because the convolution operation is roto-translation invariant. This because it is the weighted sum of the weights of the filter and the portion of the input. To improve invariance it is possible to work on data, performing data augmentation on the training images, or by stacking several convolutional layers of the same size and depth, allowing to extract more-relevant features; for example, it is possible to stack three convolutional layers, with 32 filters each, before the Pooling layer. Data augmentation means modify the input with random transformations that allows the network to extract the features based on its content, rather than its position or rotation.
+\end{box-stud}
+
+\fg{0.8}{4}
+
+\que{Enumerate the building blocks of this networks as if you were going to implement it, and for each block report the overall number of parameters together with a short description on how you compute them, e.g., 3x5x5=45 (not just 45!). Consider that blue arrows refer to convolutions having a spatial extent 3x3. while the magenta one does not perform spatial averages You can use the calculator. but we are more interested in the formulas than on numbers! (Note: for some of the blocks you might need to infer the number of channels or the size from the preceding/following blocks) (40 Pts.)}
+
+
+\fg{0.8}{5}
+
+\que{In the picture, the general schema of a Denoising Autoencoder is reported with 256x256 greyscale images as input and a desired compressed representation of 8 float numbers.
+Enumerate the building blocks of the networks you would design to build the Denoising Autoencoder as if you were going to implement it in Keras (no need to write the Keras code) and for each of them tell the number of parameters providing a short description on how you computed them, e.g., 3x5x5=45 and not just 45. (Yes you can use the calculator, but we are more interested in the formula than on the numbers) (30 Pts.)}
+
+\begin{box-stud}
+\begin{python}
+x = Conv2D(128, (3,3), padding='same')(inp)   # p = 3 x 3 x 1 x 128 + 128 = 1280
+                                              # out = 256 x 256 x 128
+x = MaxPooling2D((2,2), padding='same')(x)    # p = 0
+                                              # out = 128 x 128 x 128
+x = Conv2D(64, (3,3), padding='same')(x)      # p = 3 x 3 x 128 x 64 + 64 = 73792
+                                              # out = 128 x 128 x 64
+x = MaxPooling2D((2,2), padding='same')(x)    # p = O
+                                              # out = 64 x 64 x 64
+x = Conv2D(32, (3,3), padding='same')(x)      # p = 3 x 3 x 64 x 32 + 32 = 18464
+                                              # out = 64 x 64 x 32
+x = UpSampling2D(2,2))(x)                     # p = 0
+                                              # out = 128 x 128 x 32
+x = Conv2D(64, (3,3), padding='same')(x)      # p = 64 x 3 x 3 x 32 + 64 = 18496
+                                              # out = 128 x 128 x 64
+x = UpSampling2D(2,2))(x)                     # p = 0
+                                              # out = 256 x 256 x 64
+x = Conv2D(128, (3, 3), padding='same')(x)    # p = 128 x 64 x 3 x 3 + 128 = 73.856
+                                              # out = 256 x 256 x 128
+out = Conv2D(1, (3, 3), padding='same')(x)    # p = 3 x 3 x 1 x 128 + 1 = 1153
+                                              # out = 256 x 256 x 1
+\end{python}
+\end{box-stud}
+
+\que{Describe the training procedure for the Denoising Autoencoder in the picture in terms of the dataset you need and the loss function you would use. (20 Pts.)}
+
+\fg{0.8}{6}
+
+\que{What task is addressing the network illustrated above?
+What loss would you use for training?
+How would you modify the network to also predict whether the human is an engineer or not?
+How would you train the network in this latter case?}
+
+
+\que{Enumerate the building blocks of the above network as if you were going to implement it in Keras. Consider that there might be different viable options in terms of layers type and parameters. You can choose the one you prefer, but you need to:
+\begin{itemize}
+    \item report any assumption you make
+    \item include *all* the layers and for each of them report
+    \begin{itemize}
+        \item the layer type
+        \item the input and output sizes
+        \item the formula used to compute the number of parameters in the layer, e.g., 3x5x5=45 and not just 45.
+    \end{itemize}
+\end{itemize}
+List each layer of the network in a different row of your answer to improve readability. (Yes you can use the calculator, but we are more interested in the formula than on the numbers!)}
+
+
+\begin{box-stud}
+1) input 128x128x3
+8 filtri con convoluzione 3x3 con padding same, parametri 8x(3x3x3+1) [num filtri x (3x3xD+1 bias)]
+output 128x128x8
+2) input 128x128x8
+maxpool parametri 0
+output 64x64x8
+2) input 64x64x8
+16 filtri con convoluzione 3x3 con padding same, parametri 16x(3x3x8+1)
+output 64x64x16
+3) input 64x64x16
+32 filtri con convoluzione 3x3 con padding same, parametri 32x(3x3x16+1)
+output 64x64x32
+2) input 64x64x32
+maxpool parametri 0
+output 32x32x32
+4) input 32x32x32
+16 filtri con convoluzione 3x3 con padding same, parametri 16x(3x3x32+1)
+output 32x32x16
+5) input 32x32x16
+flatten parametri 0
+output 1x16384
+6) input 1x16384
+dense, parametri 16384x16+16
+output 1x16
+7) input 1x16
+dense, parametri 16x1+1
+output 1x1
+\end{box-stud}
+
+\fg{0.8}{7}
+
+The network illustrated above performs classification of different species of birds.
+\begin{itemize}
+    \item What loss function would you use for training?
+    \item How would you modify the network to perform both classification and localization of the bird? Consider that the very same network takes as input a single image and provide as output both the class and a bounding box around the bird. You can safely assume that each image contains a single bird.
+    \item What annotations are needed to address both task in a supervised manner? What would be the training loss in this case?
+    \item How can you modify the network to address both the classification and localization tasks when only classification labels are provided?
+\end{itemize}
+
+\que{How can you increase the depth and the number of nonlinearities) of the above network while keeping (i) the same number of parameters in the convolutional part of the network and (i) the same receptive field? (just briefly describe the idea, don't describe the model summary) Would this be beneficial? (20/20 Pts.)}
+
+\begin{box-stud}
+    Potrei usare altri layer di convoluzione ma con filtri più piccoli, così i parametri non aumenterebbero ma avrei una rete più profonda
+\end{box-stud}
+
+
+\que{You don't have many images however, and you want your network to be robust to different positioning of the webcam in front of the wall clock, different weather / light conditions. What kind of data augmentation should be avoided during training? (0/1.5)}
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item noise addition
+        \item[\ok] vertical flip
+        \item[\ok] horizontal flip
+        \item[\ok] rotation
+        \item change in brightness
+        \item image scaling
+        \item scaling of x axis
+        \item scaling of y axis
+        \item translation
+        \item blur
+    \end{itemize}
+\end{box-sol}
+
+\begin{python}
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+input_shape = (128,256,3)
+
+input_layer = layers.Input(shape=input_shape, name='input')
+conv1 = layers.Conv2D(16, (5,5), strides=(1,1), padding='same',
+        activation='relu', name='conv1')(input_layer)
+mp1 = layers.MaxPooling2D(name='mp1')(conv1)
+conv2 = layers.Conv2D(32, (3,3), strides=(1,1), padding='same',
+        activation='relu', name='conv2')(mp1)
+mp2 = layers.MaxPooling2D(name='mp2')(conv2)
+dropout = layers.Dropout(0.3)(mp2)
+conv3 = layers.Conv2D(128, (1,1), strides = (1,1), padding ='same',
+        activation='relu', name='conv3')(dropout)
+batchNorm = layers.BatchNormalization(name='batchNorm')(conv3)
+        # this normalizes each slice of the volume independently
+convt1 = layers.Conv2DTranspose(32, (3,3), strides=(2,2), padding='same',
+        activation='relu', name='convt1')(batchNorm)
+convt2 = layers.Conv2DTranspose(16, (3,3), strides=(2,2), padding='same',
+        activation='relu', name='convt2')(convt1)
+output_layer = layers.Conv2DTranspose(3, (1,1), strides=(1,1), padding ='same',
+        activation= 'sigmoid', name='output')(convt2)
+model = keras.Model(inputs=input_layer, outputs=output_layer, name='model')
+\end{python}
+
+
+What is the receptive field of a pixel at the center of the output of \pyth{batchNorm} layer? (1 punto)
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item 9x9
+        \item 5x5
+        \item 12 x 12
+        \item 8x8
+        \item[\ok] 4x4
+        \item 6x8
+        \item 10 x 10
+    \end{itemize}
+\end{box-sol}
+
+\que{Consider the network is now compiled as follows, model.compile(optimizer=tf.optimizers.Adam0, loss=categorical, and that you have a large training set of images from a surveillance camera, with whatever annotation needed. Select all the tasks for which a neural network expert (like you are expected to be) would train and use this network for: (1 punto)
+\begin{itemize}
+    \item determining how many persons appears in the image
+    \item determining the image regions covered by cars, by persons and anything else
+    \item determining whether it is winter or summer whether it is rain no or no
+    \item determining which pixels contain a human, a car and what is the temperature in there
+    \item determining where cars are parked in the image
+    \item determining where there are empty parking slots
+    \item tracking persons, cars and buses moving in she scene
+    \item determining the location of each person, each dog, each car in the scene
+    \item determining all the pixels covered by road, sky or others
+\end{itemize}
+}
+
+\que{Consider the InceptionNet module. Which of the following statements are true?}
+
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item[\ok] it uses multiple convolutional filters of different sizes in parallel
+        \item it was the first to introduce skip connections
+        \item it has been the first module used for semantic segmentation
+        \item it was the first learnable upsampling filter
+        \item[\ok] it leverages 1x1 convolutions to reduce the computational burden
+    \end{itemize}
+\end{box-sol}
+
+\que{What are GANs? "Briefly” describe their training process.}
+
+\begin{box-stud}
+    Generative adversarial network. Son composte prinopalmemte da due parti generator e discriminator. I primo is occupa di generare immagini mentre il secondo si occupa di capire so I immagine e un immagine vera o generata dal generator. Il training e fatto facendo k- times gradient descent sul discrminator, cereando di minimizzare la funzione di loss rispetto a parametri tetaD del discrimnator, Viene poi fatto gradient descent sul generator cercando di minimizzare la funzione rispetto ai parametri totaD del generator. Alla fine del training il discriminator non è più in grado di capire se l’immagine è vera o falsa (generata dal generator), così viene scartato il discriminator e viene tenuto solo il generator che può essere usato ad esempio per data augmentation.
+\end{box-stud}
+
+
+\que{Please briefly describe the above model (missing), indicating
+\begin{itemize}
+    \item what type of model is being trained
+    \item what type of task this network is meant to solve
+\end{itemize}
+Give an example of a visual recognition task that this network can be trained for and a task
+that this network cannot be trained for. Please, refrain from mentioning tasks that a N expert would never train this network for, even though the training function can be in principle invoked.}
+
+\begin{box-stud}
+    The model represents a convolutional neural network using residual connections, a particular type of skip connection aimed which generally aims at reducing the vanishing gradient and retain spatial information from earlier convolution layers, given that the deeper in the network that we go, the more advanced the feature get but the more spatial information is lost. The network is aimed at resolving a multi class classification task, which we can infer from the fully connected part of the network containing a softmax activation. In specific, we have 10 possible classes. We might use this kind of network to classify among species of animals, whereas we might not use it for semantic segmentation because we have a fully connected part of the network, making it incompatible.
+\end{box-stud}
+
+
+\que{What does the sentence ``You shall know a word the company it keeps'' by John R. Firth (1957) mean? Why do we mentioned it in the course and which model uses it? Describe the model}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

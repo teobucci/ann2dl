@@ -1,0 +1,9 @@
+%!TEX root = ../main.tex
+
+\paragraph{Receptive field.} The receptive field at layer $k$ is the area denoted $R_k \times R_k$ of the input that each pixel of the $k$-th activation map can 'see'. By calling $F_j$ the filter size of layer $j$ and $S_i$ the stride value of layer $i$ and with the convention $S_0=1$, the receptive field at layer $k$ can be computed with the formula:
+\[
+R_k=1+\sum_{j=1}^k\left(F_j-1\right) \prod_{i=0}^{j-1} S_i
+\]
+In the example below, we have $F_1=F_2=3$ and $S_1=S_2=1$, which gives $R_2=1+2 \cdot 1+2 \cdot 1=5$.
+
+\fg{0.7}{receptive_field}

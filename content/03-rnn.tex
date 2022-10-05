@@ -1,0 +1,148 @@
+%!TEX root = ../main.tex
+
+\section{RNN}
+
+\que{In Recurrent Neural Networks (RNN), what is the Vanishing Gradient due to? How this is fixed by Long Short-Term Memories (LSTM)? Why does this fix the problem? (3/3 Pts.)}
+
+\begin{box-stud}
+    Nelle RNN il vanishing gradiont è principalmento dovuto all' unfolding dei neuroni con connescioni ricorrenti, questi infatti non avendo attivazioni lineari a lungo andare possono soffrire il problema del vanishing gradient, proprio per questo le RNN di solito non riescono ad andare più di 10 step indietro nel tempo. Nelle LSTM questo problema è risolto tramite una memoria cho usa solo attivazioni lineari e pesi fissati ad 1, utilizza costant error carousel (CEC), Il contenuto della memoria viene pol letto e scritto attraverso opportuni gate. Questo risolve il problema perche andando indietro nel tempo la LSTM vede il gradiente moltiplicarsi sempre per il termine costante 1 mentre altraversa la memora
+\end{box-stud}
+
+\begin{box-stud}
+    Given that in order to train a RNN we need to "unfold" the network for each time step, if the number of time steps is too big then the gradient during training gets multiplied by small (leading to either vanishing or exploding) numbers too many times leading to the vanishing gradient problem. This usually happens after if the RNN has more than 10 time steps, which means that we can't use the RNN to go back in time too much. The LSTM were employed to solve this problem by using smaller linear BLOCKS that have an input, output, memory and forget gate. LSTMs help solve the vanishing gradient because my manipulating the gradient of the forget gate, we are able to better tune the training process and avoid such problems.
+\end{box-stud}
+
+\que{Why do we need an attention mechanism? Aren't Long Short-Term Memories enough? (1 Pts.)}
+
+
+\que{What is the goal of Word Embedding and what motivates it? (1/1 Pts.)}
+
+\begin{box-stud}
+    Word embedding is a task that is used in Natural Language Processing tasks. It consists in projecting the word original representation onto a latent space. Word embedding have multiple goals: reduce dimensionality (space compression) and make similar words near in the latent space. Word embedding is motivated by the fact that words are typically represented using one-hot encoding over a dictionary. It means that each word will have all elements equal to zero and only one 1: extremely sparse representation. Moreover, two similar words will be equally distant independent on how much they are similar. However, when we analyse text for several tasks (sentiment analysis, word prediction...), we would like to be able to represent words in a small and dense space being able to directly compute how much two words are similar. These are the reason why word embeddings are used.
+\end{box-stud}
+
+\que{Can word embedding overfit? Motivate your answer and, in case it does, suggest a way to
+detect it. (20 Pts.)}
+
+\begin{box-stud}
+    Yes, word embedding can overfit as all other machine learning and deep learning tasks. If a word embedding overfits, it means that it has not learnt to represent the words and to learn a latent space. It will have simply learnt to reproduce the words in input. It is possible that the word embedding overfits because of the complex architectures we are likely to use to perform this task, which somehow replicates the reasoning of an autoencoder (it has to learn an embeddina). We can overfit if we do not validate our data or even if we have an extremely complex network to perform the word embeddings. We can detect if a model is performing overfitting on word embeddings by using cross validation techniques. In this way, the model will be tested on new unseen samples.
+\end{box-stud}
+
+\begin{box-stud}
+    Theoretically yes. For example, if we use a latent representation that is big as the vocabulary we risk overfit. Another example is if we use lots of hidden (that are prone to overfitting) we could risk overfitting the word embedding. Concerning word2vect, which is based on a few layers, I think that this become a rare possibility since our vocabulary is generally much higher than the N-words that are used for context handling. Theoretically yes, practically not common
+\end{box-stud}
+
+\que{When we could prefer the use of Recurrent Neural networks instead of Long Short-Term Memory networks? Why? (10 Pts.)}
+
+\que{What is an STM and why it helps with vanishing gradient? (20 Pts.)}
+
+\que{What is word embedding? What it is used for?}
+
+\que{Describe the Word2Vec network architecture. (2/2 Pts.)}
+
+\begin{box-stud}
+    Word2Vec is an architecture proposed by google with two different possible implementations: Bag Of Words and SkipGram. Word2Vec is a model working on sentences of words to be able to perform natural language processing tasks such as Masked Language Modelling (detect what is the missing word given its context). The former implementation takes the context of a word (the words near the target word) and computes which is the most likely word to be in that position. SkipGram implementation takes a word as input and outputs a vector of probabilities representing the probabilities of each position of the context to represent a word: it means it computes for each position a vector of probabilities. In that way, it computes the most likely word in each position. Word2Vec implementation uses matrices: it has one matrix that is used to project the input on the words representation and another matrix to pass from this representation to the vector (or the) probbilities (probability). In case of BOW the context words are projected onto the same vector and are averaged
+\end{box-stud}
+
+\que{How does word2vect work? (0/10 Pts.)}
+
+\que{Do you use word embedding with LSTM networks? How? (0/10 Pts.)}
+
+\que{Do you use word embedding with transformer? How?}
+
+\que{Text is a challenging domain where several challenges need to be faced to learn successful models. With reference to machine learning on text data answer the following questions:
+\begin{itemize}
+    \item Text requires to be encoded, describe what is word embedding, what it is used for, and how it is obtained with the word2vec model.
+    \item Text comes in sequences, describe the Long Short-Term Memory cell and the architectures which can be used when inference is done online, i.e., one word at the time, and batch, i.e., when the entire sentence is available.
+    \item Long Short-Term Memory cells solve the vanishing/exploding gradient problem of Recurrent Neural Networks. What is this problem due to? How do they solve it?
+\end{itemize}
+}
+
+\que{Do I really need a recurrent neural network to process a stream of input data? Why can't I use a standard feed forward architecture? (10 Pts.)}
+
+\que{How does the WRITE mechanism works in a Neural Touring Machine? (10 Pts.)}
+
+\que{How does the READ mechanism work in a Neural Touring Machine? (10 Pts.)}
+
+\que{What is the difference between a Recurrent Neural Network and a Long Short-Term Memory in terms of architecture? (Try to be short and focused!) (20 Pts.)}
+
+\que{What is the difference between a Recurrent Neural Network and a Long Short-Term Memory in terms of training algorithms? (Try to be short and focused!) (20 Pts.)}
+
+\que{How data representation is learned via deep autoencoders? (20 Pts.)}
+
+\que{How data representation is leaned via recurrent neural network? (20 Pts.)}
+
+\que{What is the pain behind text encoding? What is the relief? (20 Pts.)}
+
+\que{How could we size the embedding of a neural autoencoder? (1 Pts.)}
+
+\que{Why do we need recurrence mechanism? Isn't attention mechanism enough? (1 pts.)}
+
+\que{The current state of the art in text modeling and prediction is the Transformer. Is it implemented with a Recurrent Neural Network? Does it suffer the Vanishing Gradient problem? Motivate your answer. (20 Pts.)}
+
+\que{Can autoencoder overfit? Motivate your answer and, in case they do, explain how to detect it.}
+
+\que{How sentences are embedded in Seq2seq modeling? (0/1 Pts.)}
+
+\begin{box-stud}
+    In a Seq2seq model words are embedded by assigning a certain integer number to each word present in the learning dictionary. We also need special characters like the <BOS> Begin of sequence, «EOS> End of sequence, <UNK> for unknown words not present in my dictionary, <PAD> because deep learning algorithm are trained in mini batches and those have to be of the same length.
+\end{box-stud}
+
+\begin{box-stud}
+    Sentences are embedded using sentence embeddings. A simple approach we can use to embed a sentence (thus to produce a sentence embedding) is to compute the word embedding of each word and use a vector of word embeddings. Seq2seq models analyse sentences using an encoder-decoder architecture. The input sentence is analysed from the encoder producing the hidden states. Some characters are inserted to represent key location in text as an example a special character can be used to represent that the sentence is finished and the decoder must start to produce the output. Then, once the encoder finishes to evaluate the sequence in input, the decoder will start to analyse the sequence outputted by the encoder in an autoregressive manner. The decoder will use the output of the encoder to produce the first output, than, it will be concatenated to the input and it will be feeded to it for the next step.
+\end{box-stud}
+
+\begin{box-sol}
+    Seq2seq modelling uses an encoder/decoder architecture and the embedding of sentences happens in the encoder. The encoder is usually made of recurrent cells (RNNs, LSTMs or GRUs) so to capture the sequential aspect of the problem.
+\end{box-sol}
+
+\que{Exercise 4 (6 Pts.):
+Consider the problem of sequence modeling and the classical Seq2seq model used for machine translation. Answer the following questions:
+\begin{itemize}
+    \item What is "sequence to sequence modeling"?
+    \item Describe the Long Short-Term Memory cell and its use in sequence modeling
+    \item Describe the classical Seq2seq model based on STM cells for language translation, its training procedure and its run-time inference
+    \item What is an attention mechanism? How can it be used in a Seq2seq model?
+\end{itemize}
+}
+
+\que{What are Neural Turing Machines? How does attention work in this kind of models? (2/2 Pts.)}
+
+\begin{box-stud}
+    Neural turing machine sono RNN che hanno anche a disposizione una memona costituita da vettori. L'RNN svolge il ruolo di controller performando operazioni di scrittura e lettura in memoria. Per rendere le operazioni di lettura e scrittura differenziabli ogni volta viene letta o scritta tutta la memoria, solo in misura diversa e qui entra in gioco l’attention mechanism che appunto indica in che misura scrivere nelle varie. Attention mechanism diviso in due fasi content-base e location-based. Nel content-based la stato attuale viene confrontato con il contenuto della memoria tramite dot product e poi viene applicata softmax per avere un primo attention vector che successivamento viene confrontato con l'attention vector dello step precedente. Nel location-based i due venoono interpolati e viene fatta una convolve tra il vattore finora ottenuto e uno shift filter con successivo sharpen, permettendo alla rete di concentrarsi anche su celle diverse.
+\end{box-stud}
+
+
+\que{What is the Transformer? How does attention work in this model? (2/2 Pts.)}
+
+\begin{box-stud}
+    I trasformer è costituito da uno stack di encoder e da uno stack di decoder. Entrando piu nel dettaglio ogni encoder è composto da un modulo di self-attention e da una FFNN. Invece il decoder ha, oltre i due layer dell'encoder, anche un layer di encoder-decoder attention in cui riceve l'output del top encoder. Il ruolo principle è svolto dal self-attention che si occupa di identificare le parole della frase che più hanno importanza per la parola che si sta analizzando in questo momento. Una multi-head attention permette di guardare più parole e di tenere in considerazione più representation spaces. Attention calcolata tramite matrici Q,K,V rispettivamente query, key e value. Il trasformer non usa RNN e al suo posto per capire l’ordine delle parole nella frase usa un positon encoding. Il primo encoder riceve l'input dopo che è stato applicato su di esso un embedding.
+\end{box-stud}
+
+\que{How does the attention mechanism work?}
+
+\begin{box-stud}
+    The attention mechanism has been introduced to be able to focus on different parts of the input. The attention mechanism is used in several models: Neural Turing Machines, Seq2seq models, Transformers and so on. The idea is to overcome the limits imposed by previous models such as STMs and it is built on top of RNN. We aim at modelling which is the input that is more correlated with the output to increase the performance of the models that we are going to produce. In fact, in many tasks such as natural language, a word may be more correlated with some word in the past more than on the last 3/4 word, as an example. Attention in NTMs: For instance, in NTMs we use the attention mechanisms to be able to read at different locations of the memory with different extents and to write at different locations of memory at different extents (using two types of attentions called content-based attention and location-based attention). Attention in Seg2Seg: In Seg2Seg models we compute the attention using both the hidden states and the source states to produce attention scores (multiplicative or additive style) which will be used to produce attention weights. Then, we will build a context vector and an attention vector at the end. This procedure allows us to understand which are the most important inputs characterizing what we will have in output.
+\end{box-stud}
+
+\que{Describe briefly the Seq2seq model. Can it be used with RNN or it can only be used with LSTM? Why? (20 Pts.)}
+
+\que{For each of the models in the IMAGE below provide its description and make an example of it.}
+
+\fg{1}{8}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

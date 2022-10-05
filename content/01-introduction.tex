@@ -1,0 +1,297 @@
+%!TEX root = ../main.tex
+
+\section{Syllabus}
+
+The following is a list of topics, questions, subjects which are expected you to know at the end of the course on Artificial Neural Networks and Deep Learning. For this reason you can use it to double check your preparation before the exam.
+Please recall the exam is meant to verify what you have understood from the slides and lecture provided by the teachers, having said this, note:
+\begin{itemize}
+    \item This is NOT the list of questions and exercises you will find in the exam, but we will look at this list when preparing it, so the exam questions are going to check these points
+    \item If you know how to answer/face any of the following then you know how to face any possible question for the exam
+\end{itemize}
+Machine vs Deep Learning
+\begin{itemize}
+    \item What is machine learning
+    \item What are the machine learning paradigms and their characteristics
+    \item What are the machine learning task and their characteristics
+    \item What is deep learning and how it differs from machine learning
+    \item Examples of successful deep learning applications
+    \item What is transfer learning and what it is used for
+    \item What is a feature and its role in machine and deep learning
+    \item What is cross-validation and what it is used for
+    \item What are hyperparameters and identify those for all the models presented in the course
+    \item What is Maximum likelihood estimation and how does it work in practice
+    \item What is Maximum a posteriori and how does it work in practice
+\end{itemize}
+Feed Forward Neural Networks
+\begin{itemize}
+    \item The perceptron and its math
+    \item The Hebbian Learning paradigm, its maths, and it application
+    \item The feed forward neural architecture and its improvement wrt the Perceptron
+    \item The number of parameters of any model you can build
+    \item Activation functions, their math, their characteristics, and their practical use
+    \item What is backpropagation and how does it work
+    \item The relationship with non-linear optimization and gradient descent
+    \item Backpropagation computation for standard feedforward models
+    \item Online vs batch, vs mini-batch learning and their characteristics
+    \item Forward-backward algorithm for backpropagation
+    \item Derivatives chain rules
+    \item Error functions, their statistical rationale, their derivation, and their derivative
+    \item The issue of overfitting and its relationship with model complexity
+    \item Regularization techniques, their rationale and their implementation
+    \item Techniques for hyperparameters tuning and model selections
+    \item Techniques for weights initialization and their rationale
+    \item Batch-Normalization rationale and use
+\end{itemize}
+Convolutional Neural Networks
+\begin{itemize}
+    \item Convolution and correlation, linear classifier for images
+    \item The layers of a CNN
+    \item Connections between CNN and Feedforward-NN, interpretations of CNN
+    \item How to compute the number of parameters of a CNN
+    \item Best practices to train CNN models: data augmentation, Transfer learning
+    \item Design criteria from the most successful architectures shown during classes (no need to
+    know exactly the architectures)
+    \item Fully convolutional CNN and CNN for segmentation
+    \item The key principles of CNN used for object detection
+    \item Residual learning
+    \item GANs, what they are and how they are trained
+    Recurrent Neural Networks
+    \item Models for sequence modeling
+    \item The architecture and math of a recurrent neural network
+    \item Backpropagation through time rationale and math
+    \item The limits of backpropagation through time and the vanishing/exploding gradient issue
+    \item The vanishing gradient math in a simple case
+    \item The Long Short-Term Memory model, rationale, ad math
+    \item The Gated Recurrent Unit
+    \item LSTM Networks, hierarchical and bidirectional.
+\end{itemize}
+Sequence to Sequence Learning
+\begin{itemize}
+    \item Sequential Data Problems, with examples
+    \item The Seq2Seq model, training, and inference
+    \item Neural Turing Machine model and the attention mechanism
+    \item Attention mechanism in Seq2Seq models
+    \item Chatbot: core models and context handling
+    \item The Transformer model
+\end{itemize}
+Word Embedding
+\begin{itemize}
+    \item Neural Autoencoder model, error function, and training
+    \item Language models and the N-grams model
+    \item Limits of the N-gram model
+    \item The concept of embedding and its benefits
+    \item The Neural Language Model and its use for word embedding
+    \item Google’s word2vec model (CBOW)
+    \item Possible uses of word embedding
+\end{itemize}
+
+\section{Introduction}
+
+\que{Does learning rate have some relationship with the dying neurons issue? Why? (0.5/1 Pts.)}
+
+\begin{box-stud}
+    No. It doesn't. Because the dying neuron problem is due to the ReLU activation function and happens when a neuron is stuck in the negative part of the domain, where it cannot learn anything. In this case, modifying the learning help won't be of any help, because the problem lies in the ReLU activation function and we need to change that to Leaky ReLU in order to fix this issue.
+\end{box-stud}
+
+
+\que{Which of the following is true (0.5/1 Pts.)}
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item A low learning rate does not compromise training
+        \item[\ok] A high learning rate might compromise training
+        \item The higher the learning rate the better the training
+        \item[\ok] The learning rate should be reduced while training
+    \end{itemize}
+\end{box-sol}
+
+\que{One of your friends shows up with a brand new model she has invented, but which she is not able to train. You suspect this could be due to VANISHING/EXPLODING GRADIENT, what would you look at to check THIS hypothesis? HINT: Six and only six are correct; if you mark more, these will be counted as errors, if you mark less you are loosing points. (3 Pts.)}
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item[\ok] The activation functions used for neurons
+        \item The output values of neurons during training
+        \item[\ok] The distribution of the weights during training
+        \item[\ok] The initialization of the weights
+        \item[\ok] The depth of the network
+        \item The balance of classes
+        \item The gradient descent algorithm used
+        \item[\ok] The average gradient norm during training
+        \item The value of the learning rate
+        \item Whether the model contains Convolutional layers
+        \item[\ok] Whether the model contains Recurrent Layers
+        \item The loss function used
+    \end{itemize}
+\end{box-sol}
+
+
+\que{Which of these techniques might help with overfitting? (1/1 Pts.)}
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item[\ok] Early Stopping
+        \item[\ok] Weight Decay
+        \item[\ok] Dropout
+        \item Xavier Initialization
+        \item[\ok] Batch Normalization
+        \item ReLu and Leaky ReLu
+        \item Stochastic Gradient Descend
+    \end{itemize}
+\end{box-sol}
+
+\que{Briefly describe what Siamese networks are and what they are used for. (2/2 Pts.)}
+\begin{box-stud}
+    Siamese networks is a concept that arise in the field of Metric Learning. In particular, they can be found in tasks of template matching. In these tasks, we want to compare a template with an image to verify if it is one of the templates we have or not. E.g. suppose that we want to open a door automatically only if an employee comes to work, we will have an image of the employ and a camera taking a real image of the person in front of the door. Since the data are small, we cannot learn a network performing the task directly because we have few samples and we should retrain the model at each employee change. Then, Siamese network solve the problem. We train a CNN on a large dataset to recognize the elements we want to recognize to be able to produce an embedding. When the network is finished, we remove the fully connected network on top of it and we copy the network: we have two identical copies of the same network performing the embedding. At test time, we generate the embedding of the sample and of the templates with the two networks: one embed templates and one the real sample. Then, we will classify the sample as the template to which the embedding is closest.
+\end{box-stud}
+
+
+\que{What is the dying neuron problem and how would you fix it? (2 Pts.)}
+\begin{box-stud}
+    The dying neuron problem is a problem we have with ReLU activation function. Since the ReLU activation function is defined as f(x)=max(Ox), it is null in case x < 0. Its gradient is always unitary when f(x)=x and it becomes null for <0. If the updates make a neuron go in that part of the space (x<0), the neuron will die by being turned off. This is called dying neuron problem. We can fix the dying neuron problem by slightly changing the ReLU activation function. The ReLU activation function can be redefined to be f(x)=0.001x for x<0 and f(x) =x for x> =0. In this case, the gradient will never be null and the problem of the dying neuron is solved since the neuron will only enter a region in which it is lower. However, there still remains the problem of non differentiability in O. Then, we can use a modification of the ReLU activation function called ELU. It solves both the vanishing gradient problem and the non differentiability problem of the ReLU function in 0.
+\end{box-stud}
+
+\que{Which of these techniques might help with vanishing gradient? (1/1 Pts.)}
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item Early Stopping
+        \item Weight Decay
+        \item Dropout
+        \item[\CheckmarkBold] Xavier Initialization
+        \item[\CheckmarkBold] Batch Normalization
+        \item[\CheckmarkBold] ReLu and Leaky ReLu
+        \item Stochastic Gradient Descend
+    \end{itemize}
+\end{box-sol}
+
+
+\que{Make an example of an application where Classical UNSUPERVISED learning is used and than present its Deep counterpart. -> (I want it a real, short. fully specified, application example, including the algorithms and the models ... there should not be another answer like your in the class). (2 Pts.)}
+
+\que{Which conceptual difference does make Deep Learning differ significantly from being just another paradigm of Machine Learning similarly to supervised learning, unsupervised learning, reinforcement learning, etc.? (1 Pts.)}
+
+\que{Make an example of an application where Classical SUPERVISED learning is used and than present its Deep counterpart. -> (I want it a real, short. fully specified, application example, including the algorithms and the models … there should not be another answer like your in the class). (2 Pts.)}
+
+\que{Make an example of an application where Classical UNSUPERVISED learning is used and than present its Deep counterpart. -> (I want it a real, short. fully specified, application example, including the algorithms and the models ... there should not be another answer like your in the class). (2 Pts.)}
+
+\que{What are the major differences when training feed forward neural networks for regression and for classification? Motivate your answer (20 Pts.)}
+
+\que{Let's start from the core issue of machine learning, i.e, the overfitting/generalization trade-off. Discuss if and how deep learning (as a general paradigm) differs from (classical) machine learning regarding the overfitting issue. Hints: start by defining the concepts, then highlight the differences, then connect if/how these differences are related to overfitting/generalization. (30 Pts.)}
+
+\begin{box-stud}
+    The issue of overfitting happens when a machine learning model or a dep learning network is being trained. This issue happens when the model is learning the training data too much and in doing it loses the ability to generalize. This issue happens in machine learning when the model is too complex and the model starts to model not only the structure behind the data but also the noise over it. A deep neural network can compute any function with the right weights and the right number of neurons and deep enough models, it usually happens that the network is a really complex model and the risk of overfitting is high. The issue for neural network is also that it can end up learning features which are too specific for the training set and which does not generalize. In traditional machine learning this issue is more connected with the complexity of the model which uses the hand crafted features
+\end{box-stud}
+
+\que{Which loss function should be used in regression according to the Maximum A-Posterior approach? Why?}
+
+\que{Which loss function should be used in regression according to the Maximum Likelihood approach? Why?
+(10/15 Pts.)}
+
+\begin{box-stud}
+    Grazie alla MLE abbiamo capito che la migliore loss function per la regressione è la mean squared error. Questo deriva della probabilità condizionata degli input dati i pesi, di cui viene tatto il logaritmo e successivamente calcolato il gradiente rispetto ai pesi e posto uguale a zero.
+\end{box-stud}
+
+\begin{box-sol}
+    According to MLE the best function for regression is sum of squared errors. This is due to the assumption the output target t follows a Gaussian distribution ast ~ g(x|w) + N(O,sigma). Given N lid samples from t and computing the likelihood of the sample we derive that the maximum is obtained in case of the minimization of the sum or squared errors.
+\end{box-sol}
+
+
+\que{What are the issues of the ReLU activation function? How could you solve them? (15/20 Pts.)}
+
+\begin{box-stud}
+    I principale problema della relu è che se dovessimo trovarci nella parte «O della funzione l'output sarebbe pari a zero e rischieremmo di avere un vanishing gradient. Per ovviare a questo problema si può: Usare una leaky ReLu, che non soffre di questo problema Usare un batch gradient descend, che diminuicro la nrahabilità di trovarci nella parte…
+\end{box-stud}
+
+\que{How would you decide for the activation function of the output layer of a deep neural network? (20/20 Pts.)}
+
+\begin{box-stud}
+Dipende dalla task che la rete deve svolgere, se abbiamo un classificatore binario le più adatte sono sigmoide e tangente iperbolica, se abbiamo un classificatore generico (n classi) la migliore è la softmax, se invece abbiamo un regressore la migliore è una funzione lineare o una relu (nel caso in cui il valore non potesse essere inferiore a zero.\end{box-stud}
+
+\que{Make an example of deep learning model, i.e., a deep neural network, for unsupervised learning describing it briefly in terms of goal, architecture and loss function.}
+
+\que{Make an example of deep learning model, i.e., a deep neural network, for supervised learning describing it briefly in terms of goal, architecture and loss function. (20/20 Pts.)}
+
+\begin{box-stud}
+Un esempio di modello di DL con supervised learning è un modello usato per la classificazione di immagini. Infatti nel training set il modello riceve delle immagini con assegnate delle etichette prese da un insieme prestabilito (rispettivamente input e target output). Lobiettivo del modello è imparare ad associare a ogni immagine l'etichetta (tra le etichette del nostro insieme) che la rappresenta. Le architetture possono essere diverse, se usiamo un classificatore lineare l'architettura sarà un feed forwrd neural network, ma possiamo usare anche delle convolutional neural networks, avendo anche dei layer convoluzionali e di pooling nell'architettura. In entrambi i casi la loss function sarà una crossentropy, la più adatta per la classificazione.
+\end{box-stud}
+
+\que{What is the difference between supervised learning and unsupervised learning? (5/10 Pts.)}
+
+\begin{box-stud}
+Nel supervised learning il modello riceve una serie di dati e di target input e impara, dato un nuovo dato fuori dal training set, a dare un output abbastanza buono, mentre nel caso dell'unsupervised learning riceve solo dei dati e sfrutta le caratteristiche comuni nei dati per ...
+\end{box-stud}
+
+\que{What is the difference between machine learning and deep learning? (10/10 Pts.)}
+
+\begin{box-stud}[(10/10 Pts.)]
+La sostanziale differenza tra ML e DL è che il primo ha bisogno di un feature engineer per estrarre delle feature, mentre il secondo lo fa automaticamente in modo data-driven. Più nello specifico, nel caso del ML un feature engineer scova, grazie a conoscenze pregresse e dati esterni, dele feature che serviranno al modello per risolvere un task, mentre nel DL il modello stesso cerca queste feature nei dati usati per 'allenamento, estraendo feature sempre più astratte, addirittura ininterpretabili per l'occhio umano.
+\end{box-stud}
+
+
+\que{Many architectural details are involved in obtaining a successful neural network model. For each of the following, list and discuss briefly the available options:
+\begin{itemize}
+    \item Output activation function
+    \item Loss function
+    \item Weight initialization
+    \item Regularization
+\end{itemize}
+}
+
+\que{With reference to Feed Forward Neural Networks answer the following questions:
+\begin{itemize}
+    \item What is the difference between supervised and unsupervised learning?
+    \item Make an example of neural network used for supervised learning, i.e., describe the problem faced, the model, and the loss function used
+    \item Make an example of neural network used for unsupervised learning, i.e., describe the problem faced, the model and the loss function used
+\end{itemize}
+}
+
+\que{With reference to a Feed Forward Neural Network with 3 input, 1 hidden layer having 5 hidden neurons, and an output layer with 2 neurons.
+\begin{itemize}
+    \item Draw the network, and provide its output characteristics, i.e., the mathematical formula, for the output of the previous network as a function of its input and weights
+    \item Consider the previous network to be used for classification. Define its activation functions and error/loss function providing motivations for your choices
+    \item What is backpropagation and how does it work?
+\end{itemize}
+}
+
+\que{Which of the following statements about instance segmentation and semantic segmentation is true? (1.5 Pts.)}
+
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item Instance segmentation and semantic segmentation are different problems solved by the same networks
+        \item[\ok] In order to train an instance segmentation network, it is necessary to fine tune a semantic segmentation network first
+        \item[??] Instance segmentation network returns both segments and bounding boxes
+        \item[\ok] Architectures for semantic segmentation can have a shape similar to a convolutional autoencoder
+        \item Fully convolutionalization is a way to modify without training a CNN classifier, to become a (very coarse) instance segmentation network
+    \end{itemize}
+\end{box-sol}
+
+
+\que{Which of the following statements about Global Averaging Pooling is true (1.5 Pts.)}
+
+\begin{box-sol}
+    \begin{itemize}[label=]
+        \item[\ok] GAP has no trainable parameters
+        \item GAP should not be used in networks containing a batch normalization layer
+        \item GAP is used in object detection networks
+        \item Networks provided with GAP need to be trained to return class activation mapping
+        \item[\ok] Including a GAP in a CNN is a good way to make the CNN invariant to input size
+    \end{itemize}
+\end{box-sol}
+
+\que{What is Xavier initialization and why it helps with vanishing gradient? (15 Pts.)}
+
+\que{Backpropagation suffers the vanishing problem issue. What it is and how to solve it? (20 Pts.)}
+
+\que{Backpropagation suffers the exploding gradient issue. What it is and how to solve it? (20 Pts.)}
+
+\que{Which loss function should be used in classification according to the Maximum Likelihood Estimation? Why? (10 Pts.)}
+
+\que{What is Transfer Learning and what it is used for? (Be short and focused, but answer both!) (20 Pts.)}
+
+\que{What is the Global Average Pooling? Where would you introduce GAP in the above network and how would you modify the network accordingly? List the modified network architecture, one layer per row. (30 Pts.)}
+
+\que{When would you prefer weight decay with respect to early stopping? How can you tune the gamma parameter of weight decay? (2 Pts.)}
+
+\que{What is it and how can you tune the gamma parameter of weight decay? (15/20 Pts.)}
+
+\begin{box-sol}
+    The gamma parameter in weight decay balances the regularization effect of the L2 term with respect to the fitting term. It can be tuned by cross-validation, i.e., evaluating different gamma values with a holdout set and then training with the best gamma using all the data.
+\end{box-sol}
+
+
+

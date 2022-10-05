@@ -1,0 +1,120 @@
+\documentclass[10pt,a4paper,twoside]{article}
+
+\input{style}
+\input{style_append}
+
+\usepackage[
+    left=2.5cm, % inner
+    right=2.5cm, % outer
+    top=2.5cm,
+    bottom=3cm,
+    %showframe,
+    ]{geometry}
+
+\allowdisplaybreaks[4] % Consente di rompere equazioni su più pagine
+
+\usepackage[most]{tcolorbox}
+\usepackage{bbding,enumitem}
+%\newacronym{pem}{PEM}{Prediction Error Minimization}
+
+\newcommand{\ok}{\CheckmarkBold}
+
+\newcounter{question}
+\setcounter{question}{0}
+\newcommand\que[1]{%
+   \leavevmode\par
+   \stepcounter{question}
+   \noindent
+   \textbf{\thesection.\thequestion. #1}\par}
+
+\begin{document}
+
+%\frontmatter
+
+\pagestyle{empty}
+
+% TITLE PAGE
+
+\hypertarget{mytitlepage}{} % set the hypertarget
+\bookmark[dest=mytitlepage,level=chapter]{Title Page} % add the bookmark
+
+\vspace*{\fill}
+\begin{center}
+    {\large \textsc{Miscellaneous Material of}}\\
+    \vspace*{0.4cm}
+    {\Huge \textsc{Artificial Neural Networks}}\\
+    \vspace*{0.4cm}
+    {\Huge \textsc{and Deep Learning}}\\
+    \vspace*{1cm}
+    {\large {From Professor Giacomo Boracchi and Matteo Matteucci's lectures}}\\
+    \vspace*{0.1cm}
+    {\large for the MSc in Mathematical Engineering}\\
+    \vspace*{0.4cm}
+    {\large {by Teo Bucci}}\\
+    \vspace*{1cm}
+    Politecnico di Milano\\A.Y. 2022/2023
+\end{center}
+\vspace*{\fill}
+\clearpage
+
+% COPYRIGHT PAGE
+
+\hypertarget{mycopyright}{} % set the hypertarget
+\bookmark[dest=mycopyright,level=chapter]{Copyright Page} % add the bookmark
+\input{firstpages/copyright}
+\clearpage
+
+% PREFACE
+
+% \hypertarget{mypreface}{} % set the hypertarget
+% \bookmark[dest=mypreface,level=chapter]{Preface} % add the bookmark
+% \input{firstpages/preface}
+% \clearpage
+
+% CONTENTS
+
+\cleardoublepage
+\pagestyle{toc}
+\hypertarget{mytoc}{} % set the hypertarget
+\bookmark[dest=mytoc,level=chapter]{\contentsname} % add the bookmark
+\tableofcontents
+\cleardoublepage
+
+% MAIN MATTER
+
+\pagestyle{fancy}
+%\mainmatter
+
+\tikzstyle{block}      = [draw, rectangle, inner sep=6pt]
+\tikzstyle{every node} = [font=\small]
+\tikzstyle{sum}        = [draw, circle, inner sep=6pt]
+%\tikzstyle{input} = [coordinate]
+%\tikzstyle{output} = [coordinate]
+%\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+\newtcolorbox{box-stud}[1][]
+{
+    enhanced jigsaw,
+    breakable,
+    colback=orange!5!white,
+    %colback=white,
+    colframe=orange!75!black,
+    title=#1,
+}
+\newtcolorbox{box-sol}[1][]
+{
+    enhanced jigsaw,
+    breakable,
+    colback=green!5!white,
+    %colback=white,
+    colframe=green!75!black,
+    title=#1,
+}
+
+\input{content/00-notes.tex}
+\input{content/01-introduction.tex}
+\input{content/02-cnn.tex}
+\input{content/03-rnn.tex}
+\cleardoublepage
+
+\end{document}
