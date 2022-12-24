@@ -1,0 +1,6376 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{algorithm,algpseudocode}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language italian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style french
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Artificial Neural Networks and Deep Learning
+\end_layout
+
+\begin_layout Author
+Antonino Elia Mandri
+\end_layout
+
+\begin_layout Date
+A.A.
+ 2019-2020
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Introduzione
+\end_layout
+
+\begin_layout Section
+Apprendimento automatico
+\end_layout
+
+\begin_layout Standard
+Il machine learning è una branca dell'intelligenza artificiale che raccoglie
+ un insieme di metodi quali: statistica computazionale, riconoscimento di
+ pattern, reti neurali artificiali, filtraggio adattivo, teoria dei sistemi
+ dinamici, elaborazione delle immagini, data mining, algoritmi adattivi,
+ ecc; che utilizza metodi statistici per migliorare progressivamente la
+ performance di un algoritmo nell'identificare pattern nei dati.
+ Nell'ambito dell'informativa, l'apprendimento automatico è una variante
+ alla programmazione tradizionale nella quale si predispone in una macchina
+ l'abilità di apprendere qualcosa dai dati in maniera autonoma, senza ricevere
+ istruzioni esplicite a riguardo.
+ 
+\begin_inset Formula $D=$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Immaginiamo di possedere un insieme di una certa esperienza E, per esempio
+ dei dati, che chiameremo 
+\begin_inset Formula $D=x_{1},x_{2},...,x_{N}$
+\end_inset
+
+, definiamo quindi i seguenti paradigmi di apprendimento:
+\end_layout
+
+\begin_layout Itemize
+apprendimento supervisionato (supervised learning): in cui al modello vengono
+ forniti degli output desiderati 
+\begin_inset Formula $t_{1},t_{2},...,t_{N}$
+\end_inset
+
+ e l'obiettivo è quello di estrarre una regola generale che associ l'input
+ 
+\begin_inset Formula $D$
+\end_inset
+
+ all'output corretto;
+\end_layout
+
+\begin_layout Itemize
+apprendimento non supervisionato (unsupervised learning): è una tecnica
+ di apprendimento automatico che consiste nel fornire al sistema informatico
+ una serie di input (esperienza del sistema), 
+\begin_inset Formula $D$
+\end_inset
+
+ nel nostro caso, che egli riclassificherà ed organizzerà sulla base di
+ caratteristiche comuni per cercare di effettuare ragionamenti e previsioni
+ sugli input successivi; 
+\end_layout
+
+\begin_layout Itemize
+L'apprendimento per rinforzo (reinforcement learning): è una tecnica di
+ apprendimento automatico che punta ad attuare sistemi in grado di apprendere
+ ed adattarsi alle mutazioni dell'ambiente in cui sono immersi, attraverso
+ la distribuzione di una "ricompensa" detta rinforzo che consiste nella
+ valutazione delle loro prestazioni.
+ Il modello produce una serie di azioni 
+\begin_inset Formula $a_{1},a_{2},...,a_{N}$
+\end_inset
+
+ che interagiscono con l'ambiente e ricevendo una serie di ricompense 
+\begin_inset Formula $r_{1},r_{2},...,r_{N}$
+\end_inset
+
+ impara a produrre azioni che massimizzino le ricompense nel lungo periodo.
+\end_layout
+
+\begin_layout Section
+Percettrone
+\end_layout
+
+\begin_layout Standard
+Nell'apprendimento automatico, il percettrone è un tipo di classificatore
+ binario che mappa i suoi ingressi 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ (un vettore di tipo reale) in un valore di output 
+\begin_inset Formula $\boldsymbol{f\left(x\right)}$
+\end_inset
+
+ (uno scalare di tipo reale) calcolato con 
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{f(x)}=\chi(\left\langle \boldsymbol{w},\boldsymbol{x}\right\rangle +b)
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula $\boldsymbol{w}$
+\end_inset
+
+ è un vettore di pesi con valori reali, l'operatore 
+\begin_inset Formula $\left\langle \cdot,\cdot\right\rangle $
+\end_inset
+
+ è il prodotto scalare (che calcola una somma pesata degli input), 
+\shape italic
+b
+\series bold
+\shape default
+ 
+\series default
+è il bias, un termine costante che non dipende da alcun valore in input
+ e 
+\begin_inset Formula $\chi(y)$
+\end_inset
+
+ è la funzione di output.
+ Le scelte più comuni per la funzione 
+\begin_inset Formula $\chi(y)$
+\end_inset
+
+ sono:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\chi(y)=sign(y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\chi(y)=y\Theta(y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\chi(y)=y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+dove 
+\begin_inset Formula $\Theta(y)$
+\end_inset
+
+ è la funzione di Heaviside.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename percettrone.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+percettrone
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+h_{j}\left(\boldsymbol{x}|\boldsymbol{w},b\right)=h_{j}\left(\sum_{i=1}^{I}w_{i}\cdot x_{i}-b\right)=h_{j}\left(\sum_{i=0}^{I}w_{i}\cdot x_{i}\right)=h_{j}\left(\boldsymbol{w}^{T}\boldsymbol{x}\right)
+\end{equation}
+
+\end_inset
+
+Non tutti i problemi di classificazione sono affrontabili con strumenti
+ lineari come il percettrone.
+ Sorgono spontanee alcune domande, come inizializziamo e modifichiamo il
+ vettore di pesi 
+\begin_inset Formula $\boldsymbol{w}$
+\end_inset
+
+ del percettrone? Quale funzione di attivazione scegliamo? 
+\end_layout
+
+\begin_layout Subsection
+Apprendimento Hebbiano
+\end_layout
+
+\begin_layout Quotation
+\begin_inset Quotes fld
+\end_inset
+
+The strength of a synapse increases according to the simultaneous activation
+ of the relative input and the desired target
+\begin_inset Quotes frd
+\end_inset
+
+ (Donald Hebb, The Organization of Behavior, 1949).
+ 
+\end_layout
+
+\begin_layout Standard
+La regola di Hebb è la seguente: l'efficacia di una particolare sinapsi
+ cambia se e solo se c'è un'intensa attività simultanea dei due neuroni,
+ con un'alta trasmissione di input nella sinapsi in questione.
+ L'apprendimento Hebbiano può essere riassunto come segue: 
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+w_{i}^{k+1}=w_{i}^{k}+\Delta w_{i}^{k}\\
+\Delta w_{i}^{k}=\eta\cdot x_{i}^{k}\cdot t^{k}
+\end{cases}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+dove:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta$
+\end_inset
+
+: rateo di apprendimento;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{i}^{k}$
+\end_inset
+
+: l'i-esimo input al tempo 
+\begin_inset Formula $k$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t^{k}$
+\end_inset
+
+: l'output desiderato al tempo 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+L'inizializzazione dei pesi parte con dei valori casuali.
+ La soluzione può non esistere e se esiste non essere unica, ma ugualmente
+ corrette.
+ Questo algoritmo può non convergere alla soluzione per due motivi:
+\end_layout
+
+\begin_layout Enumerate
+La soluzione non esiste;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\eta$
+\end_inset
+
+ è troppo grande, continuiamo a modificare i pesi con passo elevato, viceversa
+ un valore di 
+\begin_inset Formula $\eta$
+\end_inset
+
+ troppo piccolo aumenta sensibilmente il tempo di convergenza.
+\end_layout
+
+\begin_layout Subsection
+Feed Forward Neural Networks
+\end_layout
+
+\begin_layout Standard
+Una rete neurale feed-forward ("rete neurale con flusso in avanti") o rete
+ feed-forward è una rete neurale artificiale dove le connessioni tra le
+ unità non formano cicli, differenziandosi dalle reti neurali ricorrenti.
+ Questo tipo di rete neurale fu la prima e più semplice tra quelle messe
+ a punto.
+ In questa rete neurale le informazioni si muovono solo in una direzione,
+ avanti, rispetto a nodi d'ingresso, attraverso nodi nascosti (se esistenti)
+ fino ai nodi d'uscita.
+ Nella rete non ci sono cicli.
+ Le reti feed-forward non hanno memoria di input avvenuti a tempi precedenti,
+ per cui l'output è determinato solamente dall'attuale input.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Percettrone a singolo strato
+\end_layout
+
+\begin_layout Standard
+La più semplice rete feed-forward è il percettrone a singolo strato (SLP
+ dall'inglese single layer perceptron), utilizzato verso la fine degli anni
+ '60.
+ Un SLP è costituito da un strato in ingresso, seguito direttamente dall'uscita.
+ Ogni unità di ingresso è collegata ad ogni unità di uscita.
+ In pratica questo tipo di rete neurale ha un solo strato che effettua l'elabora
+zione dei dati, e non presenta nodi nascosti, da cui il nome.
+ Gli SLP sono molto limitati a causa del piccolo numero di connessioni e
+ dell'assenza di gerarchia nelle caratteristiche che la rete può estrarre
+ dai dati (questo significa che è capace di combinare i dati in ingresso
+ una sola volta).
+ Famosa fu la dimostrazione, che un SLP non riesce neanche a rappresentare
+ la funzione XOR.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename XOR_percettrone.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Problema XOR percettrone
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Percettrone multistrato
+\end_layout
+
+\begin_layout Standard
+Il Percettrone multistrato (in acronimo MLP dall'inglese Multilayer perceptron)
+ è un modello di rete neurale artificiale che mappa insiemi di dati in ingresso
+ in un insieme di dati in uscita appropriati.
+ È fatta di strati multipli di nodi in un grafo diretto, con ogni strato
+ completamente connesso al successivo.
+ Eccetto che per i nodi in ingresso, ogni nodo è un neurone (elemento elaborante
+) con una funzione di attivazione non lineare.
+ Il Percettrone multistrato usa una tecnica di apprendimento supervisionato
+ chiamata backpropagation per l'allenamento della rete.
+ La MLP è una modifica del Percettrone lineare standard e può distinguere
+ i dati che non sono separabili linearmente.
+\end_layout
+
+\begin_layout Standard
+Prima di addentrasi in metodologie di setup delle reti neurali è utile introdurr
+e alcuni concetti.
+\end_layout
+
+\begin_layout Subsection
+Funzioni di attivazione
+\end_layout
+
+\begin_layout Standard
+Vediamo brevemente diversi tipi di funzioni di attivazione:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+ReLU.
+ 
+\series default
+The Rectified Linear Unit è una funzione di attivazione definita come la
+ parte positiva del suo argomento:
+\series bold
+ 
+\begin_inset Formula 
+\begin{equation}
+f(x)=x^{+}=max(0,x)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Grafico_relu.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+grafico ReLU
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+dove 
+\begin_inset Formula $x$
+\end_inset
+
+ è l'input a un neurone.
+
+\series bold
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Sigmoid.
+ 
+\series default
+La funzione sigmoidea è una funzione matematica che produce una curva sigmoide;
+ una curva avente un andamento ad "S".
+ Spesso, la funzione sigmoide si riferisce ad uno speciale caso di funzione
+ logistica mostrata a destra e definita dalla formula:
+\begin_inset Formula 
+\begin{equation}
+f(x)=\frac{1}{1+e^{-x}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Generalmente, una funzione sigmoidea è una funzione continua e derivabile,
+ che ha una derivata prima non negativa e dotata di un minimo locale ed
+ un massimo locale.
+ Le funzioni sigmoidee sono spesso usate nelle reti neurali per introdurre
+ la non linearità nel modello e/o per assicurarsi che determinati segnali
+ rimangano all'interno di specifici intervalli.
+ Un motivo per la relativa popolarità nelle reti neurali è perché la funzione
+ sigmoidea soddisfa questa proprietà:
+\begin_inset Formula 
+\begin{equation}
+\frac{d}{dx}sig(x)=sig(x)(1-sig(x))
+\end{equation}
+
+\end_inset
+
+Questa relazione polinomiale semplice fra la derivata e la funzione stessa
+ è, dal punto di vista informatico, semplice da implementare.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename grafico_sig.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+grafico sigmoide
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Tangente iperbolica: 
+\series default
+
+\begin_inset Formula 
+\begin{equation}
+tanh(x)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename tangente-iperbolica.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+grafico tanh
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Queste e altre funzioni verranno esaminate più attentamente dopo aver introdotto
+ tecniche di ottimizzazione delle reti neurali.
+ 
+\end_layout
+
+\begin_layout Chapter
+Reti Neurali
+\end_layout
+
+\begin_layout Standard
+L'utilità dei modelli di rete neurale sta nel fatto che queste possono essere
+ usate per comprendere una funzione utilizzando solo le osservazioni sui
+ dati.
+ Ciò è particolarmente utile nelle applicazioni in cui la complessità dei
+ dati o la difficoltà di elaborazione rende la progettazione di una tale
+ funzione impraticabile con i normali procedimenti di analisi manuale.
+\end_layout
+
+\begin_layout Standard
+I compiti a cui le reti neurali sono applicate possono essere classificate
+ nelle seguenti grandi categorie di applicazioni:
+\end_layout
+
+\begin_layout Itemize
+funzioni di approssimazione, o di regressione, tra cui la previsione di
+ serie temporali e la modellazione;
+\end_layout
+
+\begin_layout Itemize
+classificazione, compresa la struttura e la sequenza di generici riconoscimenti,
+ l'individuazione delle novità ed il processo decisionale;
+\end_layout
+
+\begin_layout Itemize
+l'elaborazione dei dati, compreso il "filtraggio" (eliminazione del rumore),
+ il clustering, separazione di segnali e compressione.
+\end_layout
+
+\begin_layout Standard
+Le aree di applicazione includono i sistemi di controllo (controllo di veicoli,
+ controllo di processi), simulatori di giochi e processi decisionali (backgammon
+, scacchi), riconoscimento di pattern (sistemi radar, identificazione di
+ volti, riconoscimento di oggetti, ecc), riconoscimenti di sequenze (riconoscime
+nto di gesti, riconoscimento vocale, OCR), diagnosi medica, applicazioni
+ finanziarie, data mining, filtri spam per e-mail.
+\end_layout
+
+\begin_layout Section*
+Pregi
+\end_layout
+
+\begin_layout Standard
+Le reti neurali per come sono costruite lavorano in parallelo e sono quindi
+ in grado di trattare molti dati.
+ Si tratta in sostanza di un sofisticato sistema di tipo statistico dotato
+ di una buona immunità al rumore; se alcune unità del sistema dovessero
+ funzionare male, la rete nel suo complesso avrebbe delle riduzioni di prestazio
+ni ma difficilmente andrebbe incontro ad un blocco del sistema.
+ I software di ultima generazione dedicati alle reti neurali richiedono
+ comunque buone conoscenze statistiche; il grado di apparente utilizzabilità
+ immediata non deve trarre in inganno, pur permettendo all'utente di effettuare
+ subito previsioni o classificazioni, seppure con i limiti del caso.
+ Da un punto di vista industriale, risultano efficaci quando si dispone
+ di dati storici che possono essere trattati con gli algoritmi neurali.
+ Ciò è di interesse per la produzione perché permette di estrarre dati e
+ modelli senza effettuare ulteriori prove e sperimentazioni.
+\end_layout
+
+\begin_layout Section*
+Difetti
+\end_layout
+
+\begin_layout Standard
+I modelli prodotti dalle reti neurali, anche se molto efficienti, non sono
+ spiegabili in linguaggio simbolico umano: i risultati vanno accettati "così
+ come sono", da cui anche la definizione inglese delle reti neurali come
+ "black box": in altre parole, a differenza di un sistema algoritmico, dove
+ si può esaminare passo-passo il percorso che dall'input genera l'output,
+ una rete neurale è in grado di generare un risultato valido, o comunque
+ con una alta probabilità di essere accettabile, ma non è possibile spiegare
+ come e perché tale risultato sia stato generato.
+ Come per qualsiasi algoritmo di modellazione, anche le reti neurali sono
+ efficienti solo se le variabili predittive sono scelte con cura.
+\end_layout
+
+\begin_layout Standard
+Non sono in grado di trattare in modo efficiente variabili di tipo categorico
+ (per esempio, il nome della città) con molti valori diversi.
+ Necessitano di una fase di addestramento del sistema che fissi i pesi dei
+ singoli neuroni e questa fase può richiedere molto tempo, se il numero
+ dei record e delle variabili analizzate è molto grande.
+ Non esistono teoremi o modelli che permettano di definire la rete ottima,
+ quindi la riuscita di una rete dipende molto dall'esperienza del creatore.
+\end_layout
+
+\begin_layout Section
+Teorema di approssimazione universale
+\end_layout
+
+\begin_layout Standard
+Nella teoria matematica delle reti neurali artificiali, il teorema di approssima
+zione universale afferma che una feed-forward network con un singolo strato
+ nascosto e contenente un numero finito di neuroni può approssimare una
+ qualsiasi funzione misurabile secondo Lebesgue, con qualsiasi grado di
+ accuratezza, su un sotto insieme compatto di 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+ sotto deboli ipotesi sulla funzione di attivazione dei neuroni.
+ Il teorema non dice nulla su algoritmi di apprendimento da utilizzare.
+ Sebbene una rete feed-forward con un singolo strato nascosto sia un approssimat
+ore universale, l'ampiezza di queste reti deve essere esponenzialmente grande.
+ Nel 2017 Lu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+literal "false"
+
+\end_inset
+
+ dimostrarono una variante del teorema per reti feed-forward con ampiezza
+ limitata.
+ In particolare provarono che una rete di ampiezza 
+\begin_inset Formula $n+4$
+\end_inset
+
+ con funzione di attivazione ReLU può approssimare una qualsiasi funzione
+ integrabile secondo Lebesgue definita su uno spazio 
+\begin_inset Formula $n-dimensionale$
+\end_inset
+
+ rispetto alla norma 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ se è permesso alla rete di crescere in profondità (quindi non più a singolo
+ strato nascosto).
+ Provarono anche la limitata potenza espressiva se l'ampiezza della rete
+ è minore o uguale a 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ Nessuna funzione integrabile secondo Lebesgue ad eccezione di quelle definite
+ su insiemi a misura nulla può essere approssimata da una rete con ampiezza
+ 
+\begin_inset Formula $n$
+\end_inset
+
+ e funzione di attivazione ReLU.
+ La formulazione originale del teorema non fa assunzioni che la funzione
+ di attivazione sia ReLU ma solo che sia continua, limitata e non costante.
+ I due teoremi sono formalmente enunciati nel modo seguente:
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+Ampiezza illimitata:
+\end_layout
+
+\begin_layout Standard
+Sia 
+\begin_inset Formula $\varphi:\mathbb{R}\rightarrow\mathbb{R}$
+\end_inset
+
+ una funzione continua, limitata e non costante (chiamata 
+\shape italic
+funzione di attivazione
+\shape default
+).
+ Sia 
+\begin_inset Formula $I_{m}$
+\end_inset
+
+ l'ipercubo unitario 
+\begin_inset Formula $[0,1]^{m}$
+\end_inset
+
+.
+ Sia 
+\begin_inset Formula $C(I_{m})$
+\end_inset
+
+ lo spazio delle funzioni a valori reali definite su 
+\begin_inset Formula $I_{m}$
+\end_inset
+
+.
+ Dato un 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+ e una qualsiasi funzione 
+\begin_inset Formula $f\in C(I_{m})$
+\end_inset
+
+, esiste allora un intero 
+\begin_inset Formula $N\in\mathbb{N}$
+\end_inset
+
+, costanti reali 
+\begin_inset Formula $v_{i},b_{i}\in\mathbb{R}$
+\end_inset
+
+ e vettori reali 
+\begin_inset Formula $\boldsymbol{w}_{i}\in\mathbb{R}^{m}$
+\end_inset
+
+ per 
+\begin_inset Formula $i=1,...,N$
+\end_inset
+
+ tale che possiamo definire:
+\begin_inset Formula 
+\begin{equation}
+F(\boldsymbol{x})=\sum_{i=1}^{N}v_{i}\varphi(\boldsymbol{w}_{i}^{T}\boldsymbol{x}+b_{i})
+\end{equation}
+
+\end_inset
+
+come realizzazione approssimativa della funzione 
+\begin_inset Formula $f$
+\end_inset
+
+ per cui vale:
+\begin_inset Formula 
+\begin{equation}
+|F(\boldsymbol{x})-f(\boldsymbol{x})|<\varepsilon
+\end{equation}
+
+\end_inset
+
+per ogni 
+\begin_inset Formula $x\in\mathbb{R}^{m}.$
+\end_inset
+
+ In altre parole, funzioni della forma 
+\begin_inset Formula $F(\boldsymbol{x})$
+\end_inset
+
+ sono dense in 
+\begin_inset Formula $C(I_{m})$
+\end_inset
+
+.
+ Questo vale ancora se si sostituisce a 
+\begin_inset Formula $I_{m}$
+\end_inset
+
+ un qualsiasi sotto insieme compatto di 
+\begin_inset Formula $\mathbb{R}^{m}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Ampiezza limita: 
+\end_layout
+
+\begin_layout Standard
+Per ogni funzione integrabile secondo Lebesgue 
+\begin_inset Formula $f:\mathbb{\mathbb{R}}^{n}\rightarrow\mathbb{R}$
+\end_inset
+
+ e ogni 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+, esiste una rete fully-connected ReLU 
+\begin_inset Formula $A$
+\end_inset
+
+ con ampiezza 
+\begin_inset Formula $d_{m}\leq n+4$
+\end_inset
+
+ tale che la funzione 
+\begin_inset Formula $F_{A}$
+\end_inset
+
+ rappresentata da tale rete soddisfa:
+\begin_inset Formula 
+\begin{equation}
+\int_{\mathbb{R}^{n}}|F_{A}(\boldsymbol{x})-f(\boldsymbol{x})|d\boldsymbol{x}<\varepsilon.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Regressione
+\end_layout
+
+\begin_layout Standard
+L'analisi della regressione è una tecnica usata per analizzare una serie
+ di dati che consistono in una variabile dipendente e una o più variabili
+ indipendenti.
+ Lo scopo è stimare un'eventuale relazione funzionale esistente tra la variabile
+ dipendente e le variabili indipendenti.
+ La variabile dipendente nell'equazione di regressione è una funzione delle
+ variabili indipendenti più un termine d'errore.
+ Quest'ultimo è una variabile casuale e rappresenta una variazione non controlla
+bile e imprevedibile nella variabile dipendente.
+ I parametri sono stimati in modo da descrivere al meglio i dati.
+ Il metodo più comunemente utilizzato per ottenere le migliori stime è il
+ metodo dei "minimi quadrati" (OLS), ma sono utilizzati anche altri metodi.
+\end_layout
+
+\begin_layout Subsection
+Variabili Casuali
+\end_layout
+
+\begin_layout Standard
+In matematica, e in particolare nella teoria della probabilità, una variabile
+ casuale (detta anche variabile aleatoria o variabile stocastica) è una
+ variabile che può assumere valori diversi in dipendenza da qualche fenomeno
+ aleatorio.
+ Le variabili casuali sono per noi molto importanti perchè l'obiettivo di
+ una rete neurale per regressione è quello di approssimare una funzione
+ target 
+\begin_inset Formula $t$
+\end_inset
+
+ incognita avendo a disposizioni 
+\begin_inset Formula $N$
+\end_inset
+
+ osservazioni (coppie input-output della funzione 
+\begin_inset Formula $t$
+\end_inset
+
+).
+ Anche per la classificazioni di immagini è possibile ricondursi a variabili
+ aleatorie.
+\end_layout
+
+\begin_layout Subsection
+Maximum Likelihood Estimation (stimatore di massima verosomiglianza)
+\end_layout
+
+\begin_layout Standard
+Supponiamo di avere 
+\begin_inset Formula $N$
+\end_inset
+
+ campioni di una variabile aleatoria di cui conosciamo la distribuzione
+ di probabilità ma non conosciamo tutti i parametri di tale distribuzione,
+ MLE si pone l'obiettivo di trovare i parametri tali per cui è massima la
+ probabilità che gli 
+\begin_inset Formula $N$
+\end_inset
+
+ campioni appartengano alla distribuzione di probabilità con i parametri
+ così trovati.
+ Dato 
+\begin_inset Formula $\boldsymbol{\theta}=(\theta_{1},\theta_{2},...,\theta_{p})^{T}$
+\end_inset
+
+ un vettore di parametri, cerchiamo 
+\begin_inset Formula $\boldsymbol{\theta}_{MLE}:$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Scriviamo la probabilità condizionata 
+\begin_inset Formula $L=P(\boldsymbol{x}|\boldsymbol{\theta})$
+\end_inset
+
+ con 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ vettore di input;
+\end_layout
+
+\begin_layout Itemize
+opzionalmente, se agevola i calcoli, calcoliamo 
+\begin_inset Formula $l=\log(P(\boldsymbol{x}|\boldsymbol{\theta}))$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+cerchiamo il massimo rispetto a 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+ con gli strumenti dell'analisi matematica:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\nabla_{\boldsymbol{\theta}}(L)$
+\end_inset
+
+ o 
+\begin_inset Formula $\nabla_{\boldsymbol{\theta}}(l)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Controlliamo che il valore di 
+\begin_inset Formula $\boldsymbol{\theta}_{MLE}$
+\end_inset
+
+ sia un massimo (tramite hessiana o altro)
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Questa è la risoluzione analitica, non sempre possibile o conveniente.
+ In ogni caso cerchiamo quel valore di 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+ che massimizza la probabilità, quindi in generale si può affrontare il
+ problema con altri metodi quali:
+\end_layout
+
+\begin_layout Itemize
+tecniche di ottimizzazione: per esempio moltiplicatori di Lagrange;
+\end_layout
+
+\begin_layout Itemize
+tecniche numeriche: per esempio la discesa del gradiente, approfondita largament
+e in seguito;
+\end_layout
+
+\begin_layout Standard
+Vediamo un esempio classico della probabilità:
+\end_layout
+
+\begin_layout Standard
+supponiamo di avere 
+\begin_inset Formula $N$
+\end_inset
+
+ indipendenti e identicamente distribuiti (i.i.d.) campioni di numeri reali
+ provenienti da una distribuzione gaussiana di varianza 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+ nota e media 
+\begin_inset Formula $\mu$
+\end_inset
+
+ incognita:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{x}=x_{1},x_{2},...,x_{n}\sim N(\mu,\sigma^{2})
+\end{equation}
+
+\end_inset
+
+ con 
+\begin_inset Formula 
+\begin{equation}
+N(\mu,\sigma^{2})=p(x|\mu,\sigma^{2})=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^{2}}{2\sigma^{2}}}
+\end{equation}
+
+\end_inset
+
+calcoliamo la likelihood 
+\begin_inset Formula $L=P(\boldsymbol{x}|\boldsymbol{\theta})$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{equation}
+L=p(x_{1},x_{2},...,x_{n}|\mu,\sigma^{2})=\prod_{i=1}^{N}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}}
+\end{equation}
+
+\end_inset
+
+passiamo al logaritmo:
+\begin_inset Formula 
+\begin{equation}
+l=\log(\prod_{i=1}^{N}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}})=\sum_{i=1}^{N}\log(\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+=N\cdot\log(\frac{1}{\sqrt{2\pi}\sigma})-\frac{1}{2\sigma^{2}}\sum_{i=1}^{N}(x_{i}-\mu)^{2}
+\end{equation}
+
+\end_inset
+
+deriviamo rispetto a 
+\begin_inset Formula $\mu$
+\end_inset
+
+ che è il parametro che vogliamo stimare:
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial l(\boldsymbol{x}|\mu)}{\partial\mu}=\frac{\partial}{\partial\mu}(N\cdot\log(\frac{1}{\sqrt{2\pi}\sigma})-\frac{1}{2\sigma^{2}}\sum_{i=1}^{N}(x_{i}-\mu)^{2})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+=\frac{1}{\sigma^{2}}\sum_{i=1}^{N}(x_{i}-\mu)
+\end{equation}
+
+\end_inset
+
+ora uguagliamo a zero la derivata parziale:
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\sigma^{2}}\sum_{i=1}^{N}(x_{i}-\mu)=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sum_{i=1}^{N}(x_{i}-\mu)=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sum_{i=1}^{N}x_{i}=\sum_{i=1}^{N}\mu
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\mu_{MLE}=\frac{1}{N}\sum_{i=1}^{N}x_{i}.
+\end{equation}
+
+\end_inset
+
+Vediamo un esempio pratico di come applicare lo stimatore di massima verosomigli
+anza con una generica rete neurale per la regressione.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename neural_network_for_regression.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Rete neurale per regressione
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Il problema della regressione può essere esposto in maniera semplice e intuitiva
+, sacrificando la formalità, come dati una serie di punti (coppie input-output
+ della funione incognita) campionati sperimentalmente cerchiamo una qualche
+ funzione che a parità di input fornisca l'output più 
+\begin_inset Quotes qld
+\end_inset
+
+vicino
+\begin_inset Quotes qrd
+\end_inset
+
+ possibile.
+ Osserviamo che non cerchiamo una funzione che passi esattamente dai punti
+ campionati (quello è il compito dell'interpolazione) ma che minimizzi la
+ differenza con i tutti i campioni.
+ Nell'esempio in fig.
+ 2.1 abbiamo una funzione incognita 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ che vogliamo stimare tramite la funzione calcolata dalla rete neurale 
+\begin_inset Formula $g(x_{n}|w).$
+\end_inset
+
+ Poichè dobbiamo tenere conto che la nostra approssimazione presenterà degli
+ errori e non avendo alcuna informazione aggiuntiva sulla funzione 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ modelliziamo questo errore come un rumore aggiunto alla funzione 
+\begin_inset Formula $g(x_{n}|w).$
+\end_inset
+
+ Per semplicità dei calcoli ipotiziamo che il rumore abbia varianza nota.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+t_{n}=g(x_{n}|w)+\epsilon_{n}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\epsilon_{n}\sim N(0,\sigma^{2})
+\end{equation}
+
+\end_inset
+
+è allora intuitivo osservare che in ogni punto 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ ha distribuzione di probabilità gaussiana di media 
+\begin_inset Formula $g(x_{n}|w)$
+\end_inset
+
+ e varianza 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\Rightarrow t_{n}\sim N(g(x_{n}|w),\sigma^{2}).
+\end{equation}
+
+\end_inset
+
+Come nell'esempio teorico dobbiamo stimare la media di una distribuzione
+ normale.
+\begin_inset Formula 
+\begin{equation}
+p(t|g(x|w),\sigma^{2})=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(t-g(x|w))^{2}}{2\sigma^{2}}}
+\end{equation}
+
+\end_inset
+
+scriviamo la likelihood per l'insieme di osservazioni 
+\begin_inset Formula $L(w)=p(\boldsymbol{t}|g(\boldsymbol{x}|w),\sigma^{2})$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+L(w)=p(t_{1},t_{2},...,t_{N}|g(x|w),\sigma^{2})=\prod_{i=1}^{N}p(t_{i}|g(x_{i}|w),\sigma^{2})
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=\prod_{i=1}^{N}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(t_{i}-g(x_{i}|w))^{2}}{2\sigma^{2}}}
+\end{equation}
+
+\end_inset
+
+cerchiamo i pesi 
+\begin_inset Formula $w$
+\end_inset
+
+ che massimizzano la likelihood 
+\begin_inset Formula $L(w)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+argmax_{w}L(w)=argmax_{w}(\prod_{i=1}^{N}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(t_{i}-g(x_{i}|w))^{2}}{2\sigma^{2}}})
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=argmax_{w}(\sum_{i=1}^{N}\log(\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(t_{i}-g(x_{i}|w))^{2}}{2\sigma^{2}}})
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=argmax_{w}(N\cdot\log(\frac{1}{\sqrt{2\pi}\sigma})-\frac{1}{2\sigma^{2}}\sum_{i=1}^{N}(t_{i}-g(x_{i}|w))^{2})
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=argmin_{w}(\sum_{i=1}^{N}(t_{i}-g(x_{i}|w))^{2}).
+\end{equation}
+
+\end_inset
+
+Siamo giunti quindi a trovare tramite lo stimatore di massima verosomiglianza
+ la 
+\series bold
+funzione di errore
+\series default
+ da minimizzare che useremo per allenare la nostra rete e quindi trovare
+ i pesi 
+\begin_inset Formula $w$
+\end_inset
+
+ ottimali per la regressione.
+ Infatti 
+\begin_inset Formula $\sum_{i=1}^{N}(t_{i}-g(x_{i}|w))^{2}$
+\end_inset
+
+ è definita SSE (
+\shape italic
+Sum of Squared Errors
+\shape default
+) ed è alla base della tecnica di ottimizzazione e regressione nota come
+ 
+\series bold
+metodo dei minimi quadrati.
+ 
+\series default
+In maniera analoga è possibile procedere anche nel caso la varianza sia
+ incognita.
+\series bold
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename sse.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Ottimizzazione
+\end_layout
+
+\begin_layout Standard
+Fino ad ora abbiamo solo accennato a come impostare i pesi di una rete neurale
+ (hebbian learning) ma non siamo mai entrati nello specifico.
+ Ricordiamo brevemente come è composta una rete neurale e come valutiamo
+ la sua bontà.
+\end_layout
+
+\begin_layout Itemize
+Una rete è formata da uno o più percettroni, disposti in vari strati di
+ ampiezza variabile.
+ Per il momento ci limitiamo alle reti Fully Connected (FC) in cui ogni
+ neurone è collegato a tutti i neuroni dello strato successivo, ad eccezione
+ ovviamente dello strato di output.
+ Ogni neurone esegue la somma pesata del proprio vettore di input e propaga
+ in uscita il valore della funzione di attivazione (ReLU, sigmoide etc...)
+ applicata alla somma di input.
+\end_layout
+
+\begin_layout Itemize
+Ogni rete deve essere validata tramite una error function (o loss function)
+ che permetta di quantificare la bontà della rete e quindi avere un responso
+ sulla validità dei pesi impostati.
+\end_layout
+
+\begin_layout Standard
+Tale error function che ricordiamo essere funzione della rete e quindi dei
+ suoi pesi 
+\begin_inset Formula $w$
+\end_inset
+
+, deve essere differenziabile (o quasi) rispetto a 
+\begin_inset Formula $w.$
+\end_inset
+
+ L'idea generale è quella di sfruttare gli strumenti del calcolo infinitesimale
+ per trovare il minimo della funzione di errore.
+ Nel caso la funzione di errore fosse differenziabile e convessa sappiamo
+ dalla teoria del calcolo che certamente esiste un minimo assoluto e sappiamo
+ ricavarlo analiticamente.
+ Sfortunatamente nel caso generale possiamo richiedere alla funzione di
+ errore solo la continuità e la quasi differenziabilità, inoltre già una
+ rete neurale di medio bassa complessità presenta al suo interno migliaia
+ o milioni di pesi che rendono praticamente impossibile trovare una soluzione
+ analitica.
+ Quello che si riesce agilmente a fare è calcolare numericamente il gradiente
+ (con un bassissimo tasso di errore) che ricordiamo fornisce la direzione
+ di massima crescità della funzione.
+ 
+\end_layout
+
+\begin_layout Subsection
+Discesa del gradiente
+\end_layout
+
+\begin_layout Paragraph
+Gradiente
+\end_layout
+
+\begin_layout Standard
+Nel calcolo differenziale vettoriale, il gradiente di una funzione a valori
+ reali (ovvero di un campo scalare) è una funzione vettoriale.
+ Il gradiente di una funzione è spesso definito come il vettore che ha come
+ componenti le derivate parziali della funzione, anche se questo vale solo
+ se si utilizzano coordinate cartesiane ortonormali.
+ In generale, il gradiente di una funzione 
+\begin_inset Formula ${\displaystyle f}$
+\end_inset
+
+, denotato con 
+\begin_inset Formula ${\displaystyle \nabla f},$
+\end_inset
+
+ (il simbolo 
+\begin_inset Formula ${\displaystyle \nabla}$
+\end_inset
+
+ si legge nabla), è definito in ciascun punto dalla seguente relazione:
+ per un qualunque vettore 
+\begin_inset Formula $\boldsymbol{v}$
+\end_inset
+
+, il prodotto scalare 
+\begin_inset Formula $\nabla f\cdot\boldsymbol{v}$
+\end_inset
+
+ dà il valore della derivata direzionale di 
+\begin_inset Formula $f$
+\end_inset
+
+ rispetto a 
+\begin_inset Formula $\boldsymbol{v}$
+\end_inset
+
+ (sse 
+\begin_inset Formula $f$
+\end_inset
+
+ è differenziabile).
+ Nel caso unidimensionale il gradiente corrisponde alla derivata della funzione
+ e indica la pendenza, quindi il tasso di variazione della funzione, e il
+ verso in cui la funzione cresce (nel caso unidimensionale la direzione
+ del vettore è determinata e unica, il segno invece determina il verso,
+ positiva la funzione cresce a destra, negativa la funzione cresce a sinistra).
+ La derivata è definita formalmente come:
+\begin_inset Formula 
+\begin{equation}
+\frac{df(x)}{dx}=\lim_{h\rightarrow0}\frac{f(x+h)-f(x)}{h}
+\end{equation}
+
+\end_inset
+
+mentre chiamiamo derivata parziale rispetto a 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ di una generica funzione reale 
+\begin_inset Formula $f:\mathbb{R}^{n}\rightarrow\mathbb{R}$
+\end_inset
+
+ derivabile:
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial f(\boldsymbol{x})}{x_{i}}=\lim_{h\rightarrow0}\frac{f(x_{1},...,x_{i}+h,...,x_{n})}{h}
+\end{equation}
+
+\end_inset
+
+con 
+\begin_inset Formula $i\in\{1,...,n\}$
+\end_inset
+
+.
+ Il gradiente è quindi un vettore le cui componenti sono tutte le derivate
+ parziali rispetto agli assi di una funzione:
+\begin_inset Formula 
+\begin{equation}
+\nabla f(\boldsymbol{x})=(\frac{\partial f(\boldsymbol{x})}{x_{1}},\frac{\partial f(\boldsymbol{x})}{x_{2}},...,\frac{\partial f(\boldsymbol{x})}{x_{n}})
+\end{equation}
+
+\end_inset
+
+ogni componente indica quanto e in che verso la funzione cresce, né consegue
+ che un vettore così definito individui la direzione e verso in cui la funzione
+ ha crescita massima, inoltre il modulo indica di quanto cresce la funzione
+ in questa direzione.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Considerazioni pratiche.
+ 
+\series default
+Notiamo che la formulazione matematica del gradiente è definito come il
+ limite del rapporto incrementale con l'incremento 
+\begin_inset Formula $h$
+\end_inset
+
+ che tende a zero, ovviamente tale operazione non può essere svolta direttamente
+ da un calcolatore ma viene svolta tramite le tecniche del calcolo numerico,
+ in prima approssimazione è sufficiente calcolare il rapporto con un incremento
+ molto piccolo come ad esempio 
+\begin_inset Formula $1e-5$
+\end_inset
+
+ inoltre spesso funziona meglio (soprattutto in prossimità di punti angolosi,
+ in cui formalmente la derivata non è definita) la 
+\shape italic
+derivata numerica simmetrica:
+\begin_inset Formula 
+\begin{equation}
+\frac{f(x+h)-f(x-h)}{2h}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Idea generale
+\end_layout
+
+\begin_layout Standard
+In ottimizzazione e analisi numerica il metodo di discesa del gradiente
+ (detto anche metodo del gradiente, metodo steepest descent o metodo di
+ discesa più ripida) è una tecnica che consente di determinare i punti di
+ massimo e minimo di una funzione di più variabili.
+ Si voglia risolvere il seguente problema di ottimizzazione non vincolata
+ nello spazio 
+\begin_inset Formula $n-$
+\end_inset
+
+dimensionale 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+minimizzare\,f(\boldsymbol{x}),\qquad x\in\mathbb{R}^{n}.
+\end{equation}
+
+\end_inset
+
+La tecnica di discesa del gradiente si basa sul fatto che, per una data
+ funzione 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $f(\boldsymbol{x})$
+\end_inset
+
+, la direzione di massima discesa in un assegnato punto 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ corrisponde a quella determinata dall'opposto del suo gradiente in quel
+ punto 
+\begin_inset Formula $\boldsymbol{p}_{k}=-\nabla f(\boldsymbol{x}).$
+\end_inset
+
+ Questa scelta per la direzione del gradiente garantisce che la soluzione
+ tenda ad un punto di minimo di 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Il metodo del gradiente prevede dunque di partire da una soluzione iniziale
+ 
+\begin_inset Formula ${\displaystyle \mathbf{x}_{0}}$
+\end_inset
+
+ scelta arbitrariamente e di procedere iterativamente aggiornandola come
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{x}_{k+1}=\boldsymbol{x}_{k}+\eta_{k}\boldsymbol{p}_{k}
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula $\eta_{k}\in\mathbb{R}^{+}$
+\end_inset
+
+ corrisponde alla lunghezza del passo di discesa, la cui scelta diventa
+ cruciale nel determinare la velocità con cui l'algoritmo convergerà alla
+ soluzione richiesta.
+ Si parla di metodo stazionario nel caso in cui si scelga un passo 
+\begin_inset Formula ${\displaystyle \eta_{k}={\bar{\eta}}}$
+\end_inset
+
+ costante per ogni 
+\begin_inset Formula ${\displaystyle k}$
+\end_inset
+
+, viceversa il metodo si definisce dinamico.
+ In quest'ultimo caso una scelta conveniente, ma computazionalmente più
+ onerosa rispetto a un metodo stazionario, consiste nell'ottimizzare, una
+ volta determinata la direzione di discesa 
+\begin_inset Formula ${\displaystyle \mathbf{p}_{k}}$
+\end_inset
+
+, la funzione di una variabile 
+\begin_inset Formula ${\displaystyle {f}_{k}(\eta_{k}):=f(\mathbf{x}_{k}+\eta_{k}\mathbf{p}_{k})}$
+\end_inset
+
+ in maniera analitica o in maniera approssimata.
+ Si noti che, a seconda della scelta del passo di discesa, l'algoritmo potrà
+ convergere a uno qualsiasi dei minimi della funzione 
+\begin_inset Formula ${\displaystyle f}$
+\end_inset
+
+, sia esso locale o globale.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename discesa_unidimesionale.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Discesa gradiente 1-D
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename 350px-Gradient_descent.svg.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Discesa gradiente 2-D
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Algoritmo generale
+\end_layout
+
+\begin_layout Standard
+Lo schema generale per l'ottimizzazione di una funzione 
+\begin_inset Formula $f(\boldsymbol{x})$
+\end_inset
+
+ mediante metodo del gradiente è il seguente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $k=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+while 
+\begin_inset Formula $\nabla f(\boldsymbol{x})\neq0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \hspace*{}
+\length 1cm
+\end_inset
+
+calcolare la direzione di discesa 
+\begin_inset Formula $\boldsymbol{p}_{k}=-\nabla f(\boldsymbol{x})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \hspace*{}
+\length 1cm
+\end_inset
+
+calcolare il passo di discesa 
+\begin_inset Formula $\eta_{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \hspace*{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Formula $\boldsymbol{x}_{k+1}=\boldsymbol{x}_{k}+\eta_{k}\boldsymbol{p}_{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \hspace*{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Formula $k=k+1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+end.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Discesa del gradiente
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Algoritmi di ottimizzazioni della discesa del gradiente
+\end_layout
+
+\begin_layout Standard
+Nelle librerie di apprendimento (es: keras) esistono varie implementazioni
+ di algoritmi per ottimizzare la discesa del gradiente.
+ Questi algoritmi sono generalmente usati come black-box, in questa sezione
+ forniremo una panoramica e le intuizioni dietro ad essi.
+ Una prima differenziazione della discesa del gradiente è sulla quantità
+ di dati usati per i calcoli.
+ In questa sezione ci riferiamo alla funzione di costo (loss function, error
+ function etc) da minimizzare come 
+\begin_inset Formula $J(\boldsymbol{x}|\boldsymbol{\theta}):\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$
+\end_inset
+
+ funzione di 
+\begin_inset Formula $\boldsymbol{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ parametrizzata da 
+\begin_inset Formula $\boldsymbol{\theta}\in\mathbb{R}^{d}.$
+\end_inset
+
+ Per brevità, visto che minimiziamo rispetto a 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+ indichiamo la funzione di costo semplicemente come 
+\begin_inset Formula $J(\boldsymbol{\theta})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Batch gradient descent
+\end_layout
+
+\begin_layout Standard
+Batch gradient descent calcola il gradiente rispetto ai parametri 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+ della funzione di costo sull'intero insieme di dati di allenamento (training
+ dataset) ed esegue la media aritmetica:
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{\theta}_{k+1}=\boldsymbol{\theta}_{k}-\eta\cdot\nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta})
+\end{equation}
+
+\end_inset
+
+osserviamo che per eseguire un singolo aggiornamento dei parametri (ephoc)
+ dobbiamo calcolare il gradiente su tutto il dataset, questo rende l'algoritmo
+ estremamente lento e intrattabile nel caso in cui la dimensione del dataset
+ è maggiore del quantitativo di memoria del calcolatore.
+ Inoltre non permette l'aggiornamento online del modello aggiungendo o modifican
+do gli esempi nel training set durante la fase di allenamento.
+ Batch gradient descent converge sicuramente al minimo globale se la funzione
+ da ottimizzare è convessa (caso ottimo, altamente improbabile nella realtà)
+ altrimenti converge ad un minimo locale o ad un punto di sella (quest'ultimo
+ non voluto).
+ In codice python:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for i in range(nb_epochs):
+\end_layout
+
+\begin_layout Plain Layout
+
+  params_grad = gradient(loss_function, data, params)
+\end_layout
+
+\begin_layout Plain Layout
+
+  params = params - learning_rate * params_grad
+\end_layout
+
+\end_inset
+
+In formule il gradiente è calcolato come:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla_{\boldsymbol{\theta}}J(\boldsymbol{x}|\boldsymbol{\theta})=(\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{1}},\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{2}},...,\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{d}})
+\end{equation}
+
+\end_inset
+
+dove:
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{i}}=\frac{1}{N}\sum_{n=1}^{N}\frac{\partial J(x_{n}|\boldsymbol{\theta})}{\partial\theta_{i}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Stochastic gradient descent
+\end_layout
+
+\begin_layout Standard
+(SGD) al contrario aggiorna i parametri per ogni esempio di allenamento
+ 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ e il relativo output 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{\theta}_{k+1}=\boldsymbol{\theta}_{k}-\eta\cdot\nabla_{\boldsymbol{\theta}}J(x_{i},y_{i}|\boldsymbol{\theta}).
+\end{equation}
+
+\end_inset
+
+L'idea alla base di SGD è che batch gradient descent esegue calcoli ridondanti
+ su interi dataset molto grandi, come ricalcolare il gradiente per esempi
+ simili prima di aggiornare i pesi.
+ SGD elimina questa ridondanza aggiornando i pesi ad ogni computazione del
+ gradiente, questo tuttavia porta ad avere un' alta varianza del gradiente,
+ con conseguenti fluttuazioni nella loss function da minimizzare.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Stogra.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fluttuazioni SGD
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Tuttavia è stato dimostrato che decrementando lentamente e gradualmente
+ il learnig rate, SGD mostra le stesse caratteristiche di convergenza di
+ batch gradient descent, convergendo certamente ad un minimo locale o gloabale
+ per una funzione non convessa o convessa rispettivamente.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for i in range(nb_epochs):
+\end_layout
+
+\begin_layout Plain Layout
+
+  for example in data:
+\end_layout
+
+\begin_layout Plain Layout
+
+	params_grad = gradient(loss_function, data, params)
+\end_layout
+
+\begin_layout Plain Layout
+
+	params = params - learning_rate * params_grad
+\end_layout
+
+\end_inset
+
+In formule:
+\begin_inset Formula 
+\begin{equation}
+\nabla_{\boldsymbol{\theta}}J(\boldsymbol{x}|\boldsymbol{\theta})=(\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{1}},\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{2}},...,\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{d}})
+\end{equation}
+
+\end_inset
+
+dove:
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{i}}\approx\frac{\partial J(x_{n}|\boldsymbol{\theta})}{\partial\theta_{i}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Mini-batch gradient descent
+\end_layout
+
+\begin_layout Standard
+prende il meglio dei due metodi aggiornando i pesi per ogni mini batch di
+ dimensione 
+\begin_inset Formula $n$
+\end_inset
+
+ esempi di training:
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{\theta}_{k+1}=\boldsymbol{\theta}_{k}-\eta\cdot\nabla_{\boldsymbol{\theta}}J(x_{i:i+n},y_{i:i+n}|\boldsymbol{\theta}).
+\end{equation}
+
+\end_inset
+
+In questo modo risulta ridotta la varianza del gradiente e quindi degli
+ aggiornamenti dei pesi con la conseguenza di una maggiore stabilità della
+ convergenza e permette di velocizzare il calcolo rispetto a SGD sfruttando
+ le librerie ottimizzate del calcolo matriciale.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for i in range(nb_epochs):
+\end_layout
+
+\begin_layout Plain Layout
+
+  for batch in get_batches(data, batch_size=n):
+\end_layout
+
+\begin_layout Plain Layout
+
+	params_grad = gradient(loss_function, batch, params)
+\end_layout
+
+\begin_layout Plain Layout
+
+	params = params - learning_rate * params_grad
+\end_layout
+
+\end_inset
+
+In formule:
+\begin_inset Formula 
+\begin{equation}
+\nabla_{\boldsymbol{\theta}}J(\boldsymbol{x}|\boldsymbol{\theta})=(\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{1}},\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{2}},...,\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{d}})
+\end{equation}
+
+\end_inset
+
+dove:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial J(\boldsymbol{x}|\boldsymbol{\theta})}{\partial\theta_{i}}\approx\frac{1}{M}\sum_{n\in minibatch}\frac{\partial J(x_{n}|\boldsymbol{\theta})}{\partial\theta_{i}}
+\end{equation}
+
+\end_inset
+
+Minibatch è un sottoinsieme del training set di cardinalità 
+\begin_inset Formula $M$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Sfide.
+ 
+\end_layout
+
+\begin_layout Standard
+Mini-batch gradient descent non garantisce ancora ottime proprietà di convergenz
+a, ma fornisce delle sfide che devono essere affrontate:
+\end_layout
+
+\begin_layout Itemize
+Scegliere l'adatto learning rate (l.r.) può essere difficile.
+ Un l.r.
+ troppo piccolo porta ad una convergenza dolorosamente lenta, mentre un
+ l.r.
+ troppo alto causa fluttuazioni intorno ad un minimo della loss function
+ o addirittura la divergenza.
+\end_layout
+
+\begin_layout Itemize
+Programmare diversi l.r.
+ durante le fasi di allenamento seguendo schemi predefiniti oppure adattandolo
+ ai risulati intermedi dell'allenamento (learning rate adattivo).
+\end_layout
+
+\begin_layout Itemize
+Usare differenti l.r.
+ contemporaneamente.
+ Se i dati sono sparsi e le features si presentano con differenti frequenze
+ potremmo considerare di utilizzare valori di l.r.
+ elevati quando si presentano le features più rare.
+\end_layout
+
+\begin_layout Itemize
+Uscire dai minimi sub ottimi e punti di sella.
+\end_layout
+
+\begin_layout Standard
+Ora vediamo una rapida carrellata degli algoritmi più noti.
+\end_layout
+
+\begin_layout Subsubsection
+Momentum
+\end_layout
+
+\begin_layout Standard
+SGD ha problemi a navigare attraverso i 
+\begin_inset Quotes qld
+\end_inset
+
+burroni
+\begin_inset Quotes qrd
+\end_inset
+
+, per esempio zone in cui la superficie della funzione curva molto più rapidamen
+te rispetto alle altre, situazione molto comune vicino ai minimi locali.
+ In questo scenario, SGD oscilla lungo le pendenze del burrone e avanza
+ lentamente nella direzione del minimo.
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename SGD_momentum.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Momento
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Momentum è un metodo che aiuta ad accelerare SGD nella direzione rilevante
+ e riduce le oscillazioni come mostrato in Figura 2.6b.
+ Per fare ciò introduce un termine 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ nell'aggiornamento del vettore direzione come mostrato:
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+\boldsymbol{v}_{t}=\gamma\boldsymbol{v}_{t-1}+\eta\cdot\nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta})\\
+\boldsymbol{\theta}_{t}=\boldsymbol{\theta}_{t-1}-\boldsymbol{v}_{t}
+\end{cases}
+\end{equation}
+
+\end_inset
+
+Il termine 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ comunemente usato è 0.9 o un valore simile.
+ Essendo la direzione seguita al tempo t dipendente dal tempo t-1 e quindi
+ ricorsivamente da tutti i tempi precedenti, permette di mantenere una sorta
+ di memoria, inoltre è facile convincersi dalla formula che i cambi di direzioni
+ isolati verranno attenuati mentre la direzione principale, cioè quella
+ che più volte ricorre verrà incrementata.
+ Un' analogia utile a comprendere è immaginare una palla che rotola lungo
+ un sentiero di montagna, la palla tende ad accelerare nella direzione di
+ discesa ma subisce anche altre accelerazioni isolate dovute a parziali
+ intralci nel percorso, come ad esempio un sasso che la fa deviare momentaneamen
+te verso destra, momentum si occupa di smorzare tali deviazioni e incrementare
+ nella direzione di discesa.
+\end_layout
+
+\begin_layout Subsubsection
+Nesterov accelerated gradient (NAG).
+\end_layout
+
+\begin_layout Standard
+Questo medoto è un evoluzione di momentum, tornando all'analogia con la
+ palla che rotola giù da un pendio, l'idea è quella di guardarsi attorno
+ prima di calcolare la prossima direzione e cercare di aggirare preventivamente
+ ostacoli e avvallamenti.
+ Notiamo che in momentum calcoliamo preventivamente il vettore 
+\begin_inset Formula $\boldsymbol{\theta}_{t-1}-\gamma\boldsymbol{v}_{t-1}$
+\end_inset
+
+ che fornisce un' approssimazione della prossima posizione dei parametri
+ (i parametri sono raggruppati in un vettore, possono quindi essere visti
+ come punti nello spazio).
+ Allora possiamo effettivamente guardarci attorno calcolando il gradiente
+ non nella posizione attuale dei parametri ma rispetto all'approssimazione
+ futura.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+\boldsymbol{v}_{t}=\gamma\boldsymbol{v}_{t-1}+\eta\cdot\nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta}_{t-1}-\gamma\boldsymbol{v}_{t-1})\\
+\boldsymbol{\theta}_{t}=\boldsymbol{\theta}_{t-1}-\boldsymbol{v}_{t}
+\end{cases}
+\end{equation}
+
+\end_inset
+
+Ancora, 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ comunemente usato è 0.9 o un valore simile.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename NAG.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+NAG update
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+In figura 2.7 vediamo un confronto tra Momentum e NAG.
+ Momentum prima calcola il gradiente corrente (vettore blu piccolo) dopo
+ esegue un grande passo nella direzione accumulata nei passi precedenti
+ (vettore blu grande).
+ NAG invece prima esegue un grande passo nella direzione predetta (vettore
+ grande marrone) poi calcola il gradiente e corregge il passo (vettore rosso
+ piccolo).
+ Questo aggiornamento anticipato ci impedisce di accelerare troppo e aumenta
+ la reattività durante l'allenamento.
+ 
+\end_layout
+
+\begin_layout Standard
+Adesso siamo capaci di adattare gli aggiornamenti dei pesi alla pendenza
+ della funzione di errore e di accelerare SGD.
+ Il prossimo passo è adattare i nostri aggiornamenti specificamente per
+ ogni peso in modo da eseguire aggiornamenti minori o maggiori a seconda
+ dell'importanza del peso.
+\end_layout
+
+\begin_layout Subsubsection
+Adagrad 
+\end_layout
+
+\begin_layout Standard
+adatta il learning rate ai parametri, eseguendo aggiornamenti maggiori ai
+ pesi meno frequenti e aggiornamenti minori ai pesi più frequenti.
+ Per questa ragione è adatto nel caso in cui i dati siano sparsi (???? che
+ significa sparsi????).
+ Sia:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+g_{t}=\nabla_{\theta_{t}}J(\theta_{t})
+\end{equation}
+
+\end_inset
+
+inoltre definiamo:
+\begin_inset Formula 
+\begin{equation}
+G_{t}=\begin{bmatrix}\begin{array}{ccccc}
+\sum_{j=0}^{t}(\frac{\partial j(\boldsymbol{\theta})}{\partial\theta_{1}})^{2} & 0 & \cdots &  & 0\\
+0 & \ddots &  &  & \vdots\\
+\vdots &  & \sum_{j=0}^{t}(\frac{\partial j(\boldsymbol{\theta})}{\partial\theta_{i}})^{2} &  & \vdots\\
+ &  &  & \ddots & \vdots\\
+0 & \cdots & \cdots & \cdots & \sum_{j=0}^{t}(\frac{\partial j(\boldsymbol{\theta})}{\partial\theta_{d}})^{2}
+\end{array}\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+la matrice diagonale appartenente a 
+\begin_inset Formula $\mathbb{R}^{dxd}$
+\end_inset
+
+ in cui ogni elemento in posizione 
+\begin_inset Formula $i,i$
+\end_inset
+
+ è la somma dei quadrati della derivata parziale rispetto al parametro 
+\begin_inset Formula $i-esimo$
+\end_inset
+
+ dal tempo 0 al tempo 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ La regola di aggiornamento diventa:
+\begin_inset Formula 
+\begin{equation}
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{G_{t}+\epsilon}}\odot g_{t}
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula $\odot$
+\end_inset
+
+ è il prodotto elemento per elemento tra matrici.
+ In questo modo risulta evidente che il l.r.
+ risulta inversamente proporzionale agli aggiornamenti precedenti, più un
+ peso viene aggiornato più il termine corrispondente 
+\begin_inset Formula $G_{t,ii}$
+\end_inset
+
+ cresce e di conseguenza il learning rate decresce.
+ Il termine 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ è necessario per evitare divisioni per zero (comunemente nell'ordine di
+ 
+\begin_inset Formula $10^{-8}$
+\end_inset
+
+).
+ I ricercatori inoltre hanno notato che senza l'operatore di radice quadrata
+ l'algoritmo funziona molto peggio, probabilmente dovuta a una rapida decadenza
+ dei coefficienti.
+ Uno dei benefici di Adagrad è l'eliminazione della necessità di modificare
+ manualmente il learning rate.
+ D'altra parte introduce un' altra debolezza, anche estraendo la radice
+ quadrata, a denominatore sommiamo sempre quantità positive, questo alla
+ lunga porta il learing rate a valori infinitesimi, bloccando di fatto l'apprend
+imento.
+ Il prossimo algoritmo ha lo scopo di risolvere questo problema.
+\end_layout
+
+\begin_layout Subsubsection
+Adadelta 
+\end_layout
+
+\begin_layout Standard
+è un estensione di Adagrad che cerca di ridurre l'aggressività con cui monotonic
+amente decresce il learning rate.
+ Invece di accumulare tutti i quadrati dei precedenti gradienti, Adadelta
+ restringe l'accumulo con una finestra di una fissata dimensione 
+\begin_inset Formula $w.$
+\end_inset
+
+ Inoltre, invece di salvare inefficientemente tutti i 
+\begin_inset Formula $w$
+\end_inset
+
+ gradienti al quadrato salva una media decadente dei precedenti gradienti.
+ La media è definita nel modo seguente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+E[g^{2}]_{0}=\boldsymbol{0}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+E[g^{2}]_{t}=\gamma E[g^{2}]_{t-1}+(1-\gamma)g_{t}^{2}
+\end{equation}
+
+\end_inset
+
+con ancora:
+\begin_inset Formula 
+\[
+g_{t}=\nabla_{\theta_{t}}J(\theta_{t})
+\]
+
+\end_inset
+
+e 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ un termine simile al momento (circa 0.9).
+ Abbiamo affermato precedentemente che Adadelta è l'evoluzione di Adagrad,
+ richiamiamo il vettore aggiornamento di Adagrad:
+\begin_inset Formula 
+\begin{equation}
+\Delta\theta_{t}=-\frac{\eta}{\sqrt{G_{t}+\epsilon}}\odot g_{t}
+\end{equation}
+
+\end_inset
+
+adesso sostituiamo semplicemente la matrice diagonale 
+\begin_inset Formula $G_{t}$
+\end_inset
+
+ con la media definita:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta\theta_{t}=-\frac{\eta}{\sqrt{E[g^{2}]_{t}+\epsilon}}g_{t}
+\end{equation}
+
+\end_inset
+
+notiamo che adesso a denominatore abbiamo un vettore e non una matrice.
+ Definiamo, per brevità di scrittura
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+RMS[g]_{t}=\sqrt{E[g^{2}]_{t}+\epsilon}
+\end{equation}
+
+\end_inset
+
+dove RMS sta per root mean squared, allora
+\begin_inset Formula 
+\begin{equation}
+\Delta\theta_{t}=-\frac{\eta}{RMS[g]_{t}}g_{t}
+\end{equation}
+
+\end_inset
+
+il prossimo passo consiste nel rendere anche il numeratore dipendente in
+ qualche modo dai parametri, definiamo quindi un' altra media, questa volta
+ una media degli aggiornamenti precedenti:
+\begin_inset Formula 
+\begin{equation}
+E[\Delta\theta^{2}]_{0}=\boldsymbol{0}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+E[\Delta\theta^{2}]_{t}=\gamma E[\Delta\theta^{2}]_{t-1}+(1-\gamma)\Delta\theta^{2}.
+\end{equation}
+
+\end_inset
+
+La root mean squared degli aggiornamenti dei parametri è:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+RMS[\Delta\theta]_{t}=\sqrt{E[\Delta\theta^{2}]_{t}+\epsilon}.
+\end{equation}
+
+\end_inset
+
+Siccome all'aggiornamento al tempo 
+\begin_inset Formula $t$
+\end_inset
+
+ non possiamo conoscere 
+\begin_inset Formula $RMS[\Delta\theta]_{t}$
+\end_inset
+
+, lo approssimiamo usando RMS al tempo precedente.
+ Siamo giunti alla formula finale di Adadelta:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+\Delta\theta_{t}=-\frac{RMS[\Delta\theta]_{t-1}}{RMS[g]_{t}}g_{t}\\
+\theta_{t+1}=\theta_{t}-\Delta\theta_{t}
+\end{cases}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+RMSprop
+\end_layout
+
+\begin_layout Standard
+è molto simile ad Adadelta, infatti i due metodi sono stati sviluppati indipende
+ntemente nello stesso periodo e con lo scopo di risolvere i problemi di
+ Adagrad.
+ L'aggiornamento dei pesi segue questi passi:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+E[g^{2}]_{t}=\gamma E[g^{2}]_{t-1}+(1-\gamma)g_{t}^{2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{E[g^{2}]_{t}+\epsilon}}g_{t}
+\end{equation}
+
+\end_inset
+
+gli autori suggeriscono di usare 
+\begin_inset Formula $\gamma=0.9$
+\end_inset
+
+ e 
+\begin_inset Formula $\eta=0.001.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Adam
+\end_layout
+
+\begin_layout Standard
+Adaptive Moment Estimation (Adam) è un altro metodo per adattare il learning
+ rate ad ogni parametro.
+ In aggiunta alla media decadente dei gradienti precedenti al quadrato 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+ come Adadelta e RMSprop, Adam mantiene anche una media decadente dei gradienti
+ passati 
+\begin_inset Formula $m_{t}$
+\end_inset
+
+ (NB non il quadrato):
+\begin_inset Formula 
+\begin{equation}
+m_{t}=\beta_{1}m_{t-1}+(1-\beta_{1})g_{t}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+v_{t}=\beta_{2}v_{t-1}+(1-\beta_{2})g_{t}^{2}.
+\end{equation}
+
+\end_inset
+
+Notiamo che il termine 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+ è del tutto analogo a 
+\begin_inset Formula $E[g^{2}]_{t}$
+\end_inset
+
+ di Adadelta e RMSprop.
+ 
+\begin_inset Formula $m_{t}$
+\end_inset
+
+ e 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+ sono stime del momento primo (media) e momento secondo (varianza) dei gradienti
+ rispettivamente, da qui il nome del metodo.
+ Entrambi i termini vengono inizializzati a 0, gli autori hanno notato però
+ che questa inizializzazione porta un bias che fa tendere l'aggiornamento
+ a 0, soprattutto con valori di 
+\begin_inset Formula $\beta_{1},\beta_{2}$
+\end_inset
+
+ vicini a 1.
+ Per contrastare questo bias introduciamo una correzzione a entrambi i termini:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{m}_{t}=\frac{m_{t}}{1-\beta_{1}^{t}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{v}_{t}=\frac{v_{t}}{1-\beta_{2}^{t}}
+\end{equation}
+
+\end_inset
+
+L'aggiornamento diventa allora:
+\begin_inset Formula 
+\begin{equation}
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}\hat{m}_{t}
+\end{equation}
+
+\end_inset
+
+Gli autori propongono come valori di default: 
+\begin_inset Formula $\beta_{1}=0.9$
+\end_inset
+
+, 
+\begin_inset Formula $\beta_{2}=0.999$
+\end_inset
+
+ e 
+\begin_inset Formula $\epsilon=10^{-8}.$
+\end_inset
+
+ Hanno mostrato empiricamente che Adam lavora bene e con prestazioni simili
+ a Adadelta e RMSProp.
+\end_layout
+
+\begin_layout Subsubsection
+AdaMax
+\end_layout
+
+\begin_layout Standard
+In Adam calcoliamo 
+\begin_inset Formula $v_{t}=\beta_{2}v_{t-1}+(1-\beta_{2})g_{t}^{2}$
+\end_inset
+
+, notiamo che 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+ è direttamente proporzionale alla norma 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ del gradiente e quindi l'aggiornamento è inversamente proporzionale alla
+ norma del gradiente.
+ Possiamo generalizzare l'aggiornamento usando 
+\begin_inset Formula $l_{p}$
+\end_inset
+
+ norma.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+v_{t}=\beta_{2}v_{t-1}+(1-\beta_{2})|g_{t}|^{p}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=(1-\beta_{2})\sum_{i=1}^{t}\beta_{2}^{(t-i)}|g_{i}|^{p}.
+\end{equation}
+
+\end_inset
+
+La norma 
+\begin_inset Formula $l_{p}$
+\end_inset
+
+ è numericamente instabile per grandi valori di 
+\begin_inset Formula $p$
+\end_inset
+
+, questo è il motivo per cui generalmente si usa 
+\begin_inset Formula $l_{1},l_{2}$
+\end_inset
+
+.
+ Tuttavia la norma 
+\begin_inset Formula $l_{\infty}$
+\end_inset
+
+ mostra ancora un comportamento molto stabile, per questo gli autori di
+ AdaMax la propongono.
+ Definiamo 
+\begin_inset Formula $u_{t}=\lim_{p\rightarrow\infty}(v_{t})^{1/p}$
+\end_inset
+
+ allora:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+u_{t}=\lim_{p\rightarrow\infty}(v_{t})^{1/p}=\lim_{p\rightarrow\infty}((1-\beta_{2})\sum_{i=1}^{t}\beta_{2}^{(t-i)}|g_{i}|^{p})^{1/p}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+=\lim_{p\rightarrow\infty}(1-\beta_{2})^{1/p}(\sum_{i=1}^{t}\beta_{2}^{(t-i)}|g_{i}|^{p})^{1/p}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+=\lim_{p\rightarrow\infty}(\sum_{i=1}^{t}\beta_{2}^{(t-i)}|g_{i}|^{p})^{1/p}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+=max(\beta_{2}^{t-1}|g_{1}|,\beta_{2}^{t-2}|g_{2}|,...,\beta_{2}|g_{t-1}|,|g_{t}|)
+\end{equation}
+
+\end_inset
+
+che può essere riscritta ricorsivamente come:
+\begin_inset Formula 
+\begin{equation}
+u_{t}=max(\beta_{2}u_{t-1},|g_{t}|).
+\end{equation}
+
+\end_inset
+
+Al solito, 
+\begin_inset Formula $u_{0}=0.$
+\end_inset
+
+ Sostituiamo nella formula di Adam 
+\begin_inset Formula $\sqrt{\hat{v}_{t}}+\epsilon$
+\end_inset
+
+ con 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+, otteniamo così la regola di aggiornamento AdaMax:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\theta_{t+1}=\theta_{t}-\frac{\eta}{u_{t}}\hat{m}_{t}
+\end{equation}
+
+\end_inset
+
+I valori consigliati di default sono 
+\begin_inset Formula $\eta=0.002$
+\end_inset
+
+, 
+\begin_inset Formula $\beta_{1}=0.9$
+\end_inset
+
+, 
+\begin_inset Formula $\beta_{2}=0.999$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Nadam 
+\end_layout
+
+\begin_layout Standard
+Come visto prima, Adam può essere visto come una combinazione di RMSprop
+ e Momentum: RMSprop contribuisce tramite il termine 
+\begin_inset Formula $v_{t}=\beta_{2}v_{t-1}+(1-\beta_{2})g_{t}^{2}$
+\end_inset
+
+ e momentum tramite il termine 
+\begin_inset Formula $m_{t}=\beta_{1}m_{t-1}+(1-\beta_{1})g_{t}$
+\end_inset
+
+.
+ Abbiamo visto anche che Nesterov accelerated gradient (NAG) è superiore
+ a momentum.
+ Nadam (Nesterov-accelerated Adaptive Moment Estimation) combina così Adam
+ e NAG.
+ In NAG calcoliamo il gradiente non nella posizione attuale ma nella posizione
+ stimata a priori, in cui arriveremo dopo l' aggiornamento.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+g_{t}=\nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta}_{t}-\gamma\boldsymbol{m}_{t-1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+m_{t}=\gamma m_{t-1}+\eta g_{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-m_{t}
+\]
+
+\end_inset
+
+Gli autori di Nadam propongono di modificare NAG in questo modo: piuttosto
+ che applicare il momento due volte, una volta per guardarsi attorno nel
+ calcolo del gradiente 
+\begin_inset Formula $g_{t}$
+\end_inset
+
+ e una seconda volta nel calcolo di 
+\begin_inset Formula $\theta_{t+1}$
+\end_inset
+
+, usiamo il momento corrente 
+\begin_inset Formula $m_{t}$
+\end_inset
+
+ per guardarci attorno direttamente nell'aggiornamento dei pesi e non nel
+ gradiente, allora NAG modificato diventa:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+g_{t}=\nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta}_{t})
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+m_{t}=\gamma m_{t-1}+\eta g_{t}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\theta_{t+1}=\theta_{t}-(\gamma m_{t}+\eta g_{t})
+\end{equation}
+
+\end_inset
+
+Richiamiamo brevemente anche il metodo Adam:
+\begin_inset Formula 
+\[
+m_{t}=\beta_{1}m_{t-1}+(1-\beta_{1})g_{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{t}=\beta_{2}v_{t-1}+(1-\beta_{2})g_{t}^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{m}_{t}=\frac{m_{t}}{1-\beta_{1}^{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{v}_{t}=\frac{v_{t}}{1-\beta_{2}^{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}\hat{m}_{t}
+\]
+
+\end_inset
+
+Espandiamo l'ultima equazione:
+\begin_inset Formula 
+\begin{equation}
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}(\frac{m_{t}}{1-\beta_{1}^{t}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}(\frac{\beta_{1}m_{t-1}+(1-\beta_{1})g_{t}}{1-\beta_{1}^{t}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}(\frac{\beta_{1}m_{t-1}}{1-\beta_{1}^{t}}+\frac{(1-\beta_{1})g_{t}}{1-\beta_{1}^{t}})
+\end{equation}
+
+\end_inset
+
+Notiamo che 
+\begin_inset Formula $\frac{m_{t-1}}{1-\beta_{1}^{t}}=\hat{m}_{t-1}$
+\end_inset
+
+ sostituendo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}(\beta_{1}\hat{m}_{t-1}+\frac{(1-\beta_{1})g_{t}}{1-\beta_{1}^{t}})
+\end{equation}
+
+\end_inset
+
+Notiamo che questa regola è ancora Adam, per giungere a Nadam dobbiamo inserire
+ NAG modificato in precedenza, notiamo che in NAG modificato usiamo il momento
+ corrente nell' aggiornamento e non il momento del passo precedente, modifichiam
+o di conseguenza la formula di aggiornamento:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}(\beta_{1}\hat{m}_{t}+\frac{(1-\beta_{1})g_{t}}{1-\beta_{1}^{t}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename confronto_discesa.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Confronto algoritmi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Backpropagation
+\end_layout
+
+\begin_layout Standard
+In questa sezione svilupperemo una comprensione intuitiva della bachpropagation
+ che permette di calcolare agilmente il gradiente della funzione di costo
+ (error function o loss function) di una rete neurale, tramite l'applicazione
+ ricorsiva della regola di derivazione di funzioni composte, nota anche
+ come regola della catena.
+\end_layout
+
+\begin_layout Paragraph
+Derivazione funzione composta.
+\end_layout
+
+\begin_layout Standard
+Consideriamo due funzioni reali di varibile reale (la regola è valida in
+ generale per tutte le funzioni differenziabili, anche a più variabili con
+ tutti gli adattamenti del caso) 
+\begin_inset Formula $f:\mathbb{R}\rightarrow\mathbb{R}$
+\end_inset
+
+ e 
+\begin_inset Formula $g:\mathbb{R}\rightarrow\mathbb{R}$
+\end_inset
+
+ e chiamiamole 
+\begin_inset Formula $y=g(x)$
+\end_inset
+
+ e 
+\begin_inset Formula $z=f(y)$
+\end_inset
+
+.
+ Sia poi 
+\begin_inset Formula $z=f(y)=f(g(x))$
+\end_inset
+
+ la loro composizione.
+ Allora vale:
+\begin_inset Formula 
+\begin{equation}
+\frac{dz}{dx}=\frac{dz}{dy}\cdot\frac{dy}{dx}
+\end{equation}
+
+\end_inset
+
+(come se il differenziale 
+\begin_inset Formula $dy$
+\end_inset
+
+ si semplificasse nella moltiplicazione, con buona pace dei matematici).
+ Sostituendo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{dz}{dx}=\frac{d}{dy}f(y)\cdot\frac{d}{dx}g(x)
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=f'(y)\cdot g'(x)
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=f'(g(x))\cdot g(x)
+\end{equation}
+
+\end_inset
+
+In parole povere, la derivata della funzione composta 
+\begin_inset Formula $z=f(g(x))$
+\end_inset
+
+ è data dalla derivata della funzione più esterna, con argomento invariato,
+ moltiplicata per la derivata della funzione più interna.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Rete_per_regressione.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Rete neurale multistrato
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+In Figura 2.9 è mostrata una rete neurale che computa la funzione 
+\begin_inset Formula $g_{1}:\mathbb{R}^{I}\rightarrow\mathbb{R}$
+\end_inset
+
+ parametrizzata da 
+\begin_inset Formula $w$
+\end_inset
+
+.
+ La funzione da minimizzare è 
+\begin_inset Formula $E(w|t_{n},x_{n})$
+\end_inset
+
+, notiamo che 
+\begin_inset Formula $E$
+\end_inset
+
+ è funzione di 
+\begin_inset Formula $w$
+\end_inset
+
+ e parametrizzata da 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ e 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+.
+ Usando la regola della catena calcoliamo la derivata: 
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial E(w)}{\partial w_{ji}}=-2\sum_{n=1}^{N}(t_{n}-g_{1}(x_{n},w))\cdot g'_{1}(x_{n},w)\cdot w_{1j}^{(2)}\cdot h'_{j}(\sum_{j=0}^{J}w_{1j}^{(1)}\cdot x_{i,n})\cdot x_{i}
+\end{equation}
+
+\end_inset
+
+Infatti notiamo:
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial E(w)}{\partial g_{1}(x_{n},w)}=-2\sum_{n=1}^{N}(t_{n}-g_{1}(x_{n},w))
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial g_{1}(x_{n},w)}{\partial w_{1j}^{(2)}\cdot h{}_{j}(\bullet)}=g'_{1}(x_{n},w)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial w_{1j}^{(2)}\cdot h{}_{j}(\bullet)}{\partial h{}_{j}(\bullet)}=w_{1j}^{(2)}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial h{}_{j}(\bullet)}{\partial w_{1j}^{(1)}\cdot x_{i,n}}=h'_{j}(\sum_{j=0}^{J}w_{1j}^{(1)}\cdot x_{i,n})
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial w_{1j}^{(1)}\cdot x_{i,n}}{\partial w_{1j}^{(1)}}=x_{i}
+\end{equation}
+
+\end_inset
+
+Allora:
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial E(w)}{\partial w_{ji}}=\frac{\partial E(w)}{\partial g_{1}(x_{n},w)}\cdot\frac{\partial g_{1}(x_{n},w)}{\partial w_{1j}^{(2)}\cdot h{}_{j}(\bullet)}\cdot\frac{\partial w_{1j}^{(2)}\cdot h{}_{j}(\bullet)}{\partial h{}_{j}(\bullet)}\cdot\frac{\partial h{}_{j}(\bullet)}{\partial w_{1j}^{(1)}\cdot x_{i,n}}\cdot\frac{\partial w_{1j}^{(1)}\cdot x_{i,n}}{\partial w_{1j}^{(1)}}.
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename backprop.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Backpropagation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Dal punto di vista pratico, la regola della catena è molto utile, permette
+ facilmente di parallelizzare ed eseguire localmente il calcolo del gradiente
+ e l'aggiornamento dei pesi.
+ Ogni neurone ha la propria funzione di attivazione con la propria derivata,
+ possiamo calcolare le derivate singolarmente, e propagare all'indietro
+ semplicemente tramite un prodotto.
+ Per esempio nella rete in Figura 2.10 il neurone di output calcola tutte
+ le derivate parziali della sua funzione di attivazione rispetto ai propri
+ parametri di ingresso, il risultato così ottenuto viene propagato allo
+ strato precedente, in cui ogni neurone ha già calcolato le proprie derivate
+ rispetto ai suoi parametri di input, le moltiplica con la derivata ricevuta
+ dallo strato successivo e propaga all'indietro e così via fino allo strato
+ di input.
+ Inoltre quando un neurone esegue il prodotto tra le sue derivate e quella
+ ricevuta dallo strato successivo, è in possesso del gradiente della funzione
+ costo rispetto a tutti i suoi parametri e quindi procede ad aggiornare
+ i pesi secondo una delle strategie viste nella precedente sezione.
+ 
+\end_layout
+
+\begin_layout Subsection
+Scomparsa del gradiente
+\end_layout
+
+\begin_layout Standard
+I problemi che si possono incontrare usando la backpropagation sono molteplici
+ e dipendono da vari fattori, come profondità della rete, funzioni di attivazion
+e scelte, inizializzazione dei pesi e altri.
+ Alcuni sono già stati accennati e trattati nei vari algoritmi di discesa
+ del gradiente visti.
+ Il problema della 
+\series bold
+scomparsa del gradiente
+\series default
+ (in lingua inglese vanishing gradient problem) è un fenomeno che crea difficolt
+à nell'addestramento delle reti neurali profonde tramite retropropagazione
+ dell'errore mediante discesa stocastica del gradiente.
+ Come visto, ogni parametro del modello riceve ad ogni iterazione un aggiornamen
+to proporzionale alla derivata parziale della funzione di perdita rispetto
+ al parametro stesso.
+ Una delle principali cause è la presenza di funzioni di attivazione non
+ lineari classiche, come la tangente iperbolica o la funzione logistica,
+ che hanno gradiente a valori nell'intervallo 
+\begin_inset Formula ${\displaystyle (0,1)}$
+\end_inset
+
+.
+ Poiché nell'algoritmo di retropropagazione i gradienti ai vari livelli
+ vengono moltiplicati tramite la regola della catena, il prodotto di 
+\begin_inset Formula ${\displaystyle n}$
+\end_inset
+
+ numeri in 
+\begin_inset Formula ${\displaystyle (0,1)}$
+\end_inset
+
+ decresce esponenzialmente rispetto alla profondità 
+\begin_inset Formula ${\displaystyle n}$
+\end_inset
+
+ della rete.
+ Quando invece il gradiente delle funzioni di attivazione può assumere valori
+ elevati, un problema analogo che può manifestarsi è quello dell'esplosione
+ del gradiente.
+\end_layout
+
+\begin_layout Section
+Overfitting
+\end_layout
+
+\begin_layout Standard
+In statistica e in informatica, si parla di overfitting (in italiano: adattament
+o eccessivo, sovradattamento) quando un modello statistico molto complesso
+ si adatta ai dati osservati (il campione) perché ha un numero eccessivo
+ di parametri rispetto al numero di osservazioni.
+ Un modello assurdo e sbagliato può adattarsi perfettamente se è abbastanza
+ complesso rispetto alla quantità di dati disponibili.
+ Si sostiene che l'overfitting sia una violazione del principio del Rasoio
+ di Occam.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Apprendimento automatico
+\end_layout
+
+\begin_layout Standard
+Il concetto di overfitting è molto importante anche nell'apprendimento automatic
+o e nel data mining.
+ Di solito un algoritmo di apprendimento viene allenato usando un certo
+ insieme di esempi (il training set appunto), ad esempio situazioni tipo
+ di cui è già noto il risultato che interessa prevedere (output).
+ Si assume che l'algoritmo di apprendimento (il learner) raggiungerà uno
+ stato in cui sarà in grado di predire gli output per tutti gli altri esempi
+ che ancora non ha visionato, cioè si assume che il modello di apprendimento
+ sarà in grado di 
+\series bold
+generalizzare
+\series default
+.
+ Tuttavia, soprattutto nei casi in cui l'apprendimento è stato effettuato
+ troppo a lungo o dove c'era uno scarso numero di esempi di allenamento,
+ il modello potrebbe adattarsi a caratteristiche che sono specifiche solo
+ del training set, ma che non hanno riscontro nel resto dei casi; perciò,
+ in presenza di overfitting, le prestazioni (cioè la capacità di adattarsi/preve
+dere) sui dati di allenamento aumenteranno, mentre le prestazioni sui dati
+ non visionati saranno peggiori.
+\end_layout
+
+\begin_layout Paragraph
+Contromisure
+\end_layout
+
+\begin_layout Standard
+Sia nella statistica sia nel apprendimento automatico, per prevenire ed
+ evitare l'overfitting è necessario mettere in atto particolari accorgimenti
+ tecnici, come la convalidazione incrociata e l'arresto anticipato, che
+ indicano quando un ulteriore allenamento non porterebbe a una migliore
+ generalizzazione.
+\end_layout
+
+\begin_layout Paragraph
+Cross validation 
+\end_layout
+
+\begin_layout Standard
+La convalidazione incrociata è un accorgimento che non permette direttamente
+ di evitare l'overfitting ma ci permette di riconoscere quando avviene.
+ L'idea è molto semplice e quasi sempre applicabile, a patto di avere un
+ training set abbastanza grande, consiste nel rimuovere dal training set
+ un certo numero di esempi e spostarli nel validation set.
+ La rete si allena ancora normalmente sul training set, che risulterà ridotto,
+ successivamente ad ogni epoca vengono sottoposti gli esempi del validation
+ set che vengono processati dalla rete,quest' ultima durante la fase di
+ validazione non si allena (non aggiorna i pesi) e viene monitorata la funzione
+ di errore che in assenza di overfitting mostrerà un andamento simile alla
+ funzione di errore valutata durante la fase di allenamento, nel momento
+ in cui la rete inizierà ad adattarsi eccessivamente noteremo che la funzione
+ di errore valutata nel validation set iniziera ad aumentare mentre quando
+ la valutiamo nel training set continuerà a decrescere.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Overfitting_svg.svg.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Overfitting: La curva blu mostra l'andamento dell'errore nel classificare
+ i dati di training, mentre la curva rossa mostra l'errore nel classificare
+ i dati di test o validazione.
+ Una situazione in cui il secondo aumenta mentre il primo diminuisce è indice
+ della possibile presenza di un caso di overfitting.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Esistono varie implementazioni della cross validation.
+\end_layout
+
+\begin_layout Subsection
+Holdout cross validation
+\end_layout
+
+\begin_layout Standard
+È il metodo più semplice per implementare la validazione incrociata.
+ Il data set viene diviso staticamente in due parti, training set e validation
+ set e i due sottoinsiemi vengono usati come descritto prima.
+\end_layout
+
+\begin_layout Subsection
+K-fold cross validation
+\end_layout
+
+\begin_layout Standard
+Il data set viene suddiviso in k sotto insiemi di egual dimensione (escluso
+ al più l'ultimo), ad ogni epoca uno dei k sottoinsiemi viene usato come
+ validation set e gli altri k-1 come training set.
+ Inoltre ad ogni epoca il sottoinsieme scelto per la validazione cambia,
+ e si ripeterà ogni k epoche.
+ Il vantaggio di questo metodo è che importa meno come i dati vengono divisi
+ in quanto dopo k iterazioni tutto il dataset è stato usato almeno una volta
+ come validation set.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename kfoldvalidation.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+K-fold cross validation: in giallo il sottoinsieme di validazione
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Leave-one-out cross validation
+\end_layout
+
+\begin_layout Standard
+È una variante di k-fold dove k viene posto uguale a N cardinalità del dataset.
+ Quindi la rete si allena su N-1 esempi e un solo esempio è usato per la
+ validazione.
+\end_layout
+
+\begin_layout Subsection
+Iperparametri
+\end_layout
+
+\begin_layout Standard
+Fino ad ora abbiamo visto molti tasselli che compongono una rete neurale
+ ma non come combinarli assieme.
+ Purtroppo ancora non è stata sviluppata una metodologia di progettazione
+ che possa fornire linee guida solide per la creazione di una rete neurale
+ per un determinato compito.
+ Alcuni strumenti matematici possono aiutarci ad esempio come abbiamo fatto
+ per trovare la funzione di errore per la regressione.
+ Per altre grandezze invece va fatto ricorso all'esperienza, ad altri risultati
+ pubblicati riguardanti reti che svolgono un compito simile e tanti, tantissimi
+ tentativi ed errori.
+ Per valutare la bontà di un modello possiamo usare l'insieme di test e
+ ancora la cross validation.
+ Quanti e quali sono quindi gli iperparametri che il progettista della rete
+ deve scegliere? Molti, per esempio in una rete feedforward bisogna definire:
+\end_layout
+
+\begin_layout Itemize
+Numero dei neuroni e loro disposizione in strati;
+\end_layout
+
+\begin_layout Itemize
+funzione di attivazione dei neuroni;
+\end_layout
+
+\begin_layout Itemize
+funzione di errore;
+\end_layout
+
+\begin_layout Itemize
+algoritmo di discesa del gradiente;
+\end_layout
+
+\begin_layout Standard
+eventualmente anche:
+\end_layout
+
+\begin_layout Itemize
+dimensione batch;
+\end_layout
+
+\begin_layout Itemize
+dimensione validation set per la cross validation;
+\end_layout
+
+\begin_layout Itemize
+molti altri a seconda della complessità della rete.
+\end_layout
+
+\begin_layout Standard
+Come scegliere questi iperparametri?
+\end_layout
+
+\begin_layout Itemize
+usare tutte le conoscienze pregresse e ipotesi sulla distribuzione dei dati
+ da processare;
+\end_layout
+
+\begin_layout Itemize
+sfruttare le conoscienze acquisite da altri nella risoluzione di compiti
+ simili;
+\end_layout
+
+\begin_layout Itemize
+usare la creatività!
+\end_layout
+
+\begin_layout Section
+Altre tecniche di ottimizzazione
+\end_layout
+
+\begin_layout Subsection
+Shuffling e Curriculum Learning
+\end_layout
+
+\begin_layout Standard
+Generalmente allenare una rete fornendole gli esempi sempre nello stesso
+ ordine può portare ad un bias nell'algoritmo di ottimizzazione e quindi
+ all'overfitting.
+ Di conseguenza una buona idea è fornire gli esempi mescolati ad ogni epoca.
+ In altri casi, in cui lo scopo della rete è risolvere via via problemi
+ sempre più complessi, allora è meglio fornire gli esempi in ordine di complessi
+tà.
+ Quest'ultimo è il caso del Curriculum learning.
+\end_layout
+
+\begin_layout Subsection
+Preprocessamento dei dati
+\end_layout
+
+\begin_layout Standard
+Ci sono tre operazioni principali che possono essere eseguite sui dati di
+ input prima di essere processati dalla rete (sia durante il training che
+ durante il test).
+ Ricordiamo che per noi l'input è in linea generale un vettore, quindi può
+ essere visto come un punto nello spazio e l'insieme dei dati, rappresentato
+ da una matrice 
+\begin_inset Formula $X\in\mathbb{R}^{N\times D}$
+\end_inset
+
+ dove 
+\begin_inset Formula $N$
+\end_inset
+
+ è il numero dei dati, 
+\begin_inset Formula $D$
+\end_inset
+
+ la loro dimensione.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Dati_originali.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dati originali
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Sottrazione della media
+\end_layout
+
+\begin_layout Standard
+Questa operazione ha il compito di centrare la media dell'insieme dei dati
+ in zero.
+ Ad ogni coordinata di tutti i vettori viene sottratta la media rispettiva.
+ In formule:
+\end_layout
+
+\begin_layout Standard
+sia 
+\begin_inset Formula $\boldsymbol{x}_{i}$
+\end_inset
+
+ l'i-esimo vettore appartente a 
+\begin_inset Formula $X$
+\end_inset
+
+ di dimensione 
+\begin_inset Formula $D$
+\end_inset
+
+, 
+\begin_inset Formula $\boldsymbol{x}_{i}=(x_{i,1},...,x_{i,D}$
+\end_inset
+
+)
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{y}_{i}=\boldsymbol{x}_{i}-\widehat{\boldsymbol{x}}
+\end{equation}
+
+\end_inset
+
+dove
+\begin_inset Formula 
+\begin{equation}
+\widehat{\boldsymbol{x}}=(\frac{1}{N}\sum_{i=1}^{N}x_{i,1},\frac{1}{N}\sum_{i=1}^{N}x_{i,2},...,\frac{1}{N}\sum_{i=1}^{N}x_{i,D})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Normalizzazione
+\end_layout
+
+\begin_layout Standard
+Ci riferiamo alla normalizzazione dei dati non in senso geometrico classico,
+ che consiste nel dividire ogni vettore per la sua norma, ma come l'operazione
+ di riscalamento di ogni dimensione in modo tale che ognuna di esse abbia
+ circa la stessa scala.
+ Per far ciò possiamo operare in due modi:
+\end_layout
+
+\begin_layout Enumerate
+Dividiamo ogni dimensione di ogni vettore per la deviazione standard di
+ quella dimensione (analogo a quanto fatto per la media).
+ In formule:
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{y}_{i}=\frac{\boldsymbol{x}_{i}}{\boldsymbol{\sigma}}
+\end{equation}
+
+\end_inset
+
+dove
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{\sigma}=(\sqrt{\frac{1}{N}\sum(x_{i,1}-\widehat{\boldsymbol{x}}_{1})^{2}},\sqrt{\frac{1}{N}\sum(x_{i,2}-\widehat{\boldsymbol{x}}_{2})^{2}},...,\sqrt{\frac{1}{N}\sum(x_{i,D}-\widehat{\boldsymbol{x}}_{D})^{2}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Dividiamo ogni dimensione di ogni vettore per la differenza tra la coordinata
+ massima e minima rispettiva.
+ In formule:
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{y}_{i}=\frac{\boldsymbol{x}_{i}}{\boldsymbol{\Delta}}
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{\Delta}=(\max_{i}(x_{i,1}),\max_{i}(x_{i,2}),...,\max_{i}(x_{i,D}))
+\end{equation}
+
+\end_inset
+
+in questo modo l'input normalizzato avrà ogni componente compresa nell'intervall
+o 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Generalmente sottrazione della media e normalizzazione vengono effettuate
+ in coppia.
+ Ha senso normalizzare se si ha ragione di credere che l'input abbia features
+ in scale differenti ma equamente importanti.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename preprocessing_data.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Preprocessamento completo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Attenzione: 
+\series default
+un punto importante da sottolineare nelle preelaborazioni è che qualsiasi
+ statistica (es.
+ media, varianza etc) deve essere calcolata solo sui dati di addestramento
+ e quindi applicata ai tutti i dati (allenamento, validazione, test).
+ Ad esempio calcolare la media su tutti i dati e poi suddividere in allenamento,
+ validazione e test sarebbe un errore.
+ Invece le statistiche vanno calcolate solo sui dati di allenamento e poi
+ applicate a tutti i dati.
+\end_layout
+
+\begin_layout Subsection
+Batch Normalization
+\end_layout
+
+\begin_layout Standard
+Con l’aumento del numero di strati delle reti neurali permesso dalla sempre
+ crescente potenza di calcolo dei computer odierni sono sorti vari problemi
+ soprattutto durante l’addestramento, tra cui l’esplosione e la scomparsa
+ del gradiente.
+ Una delle possibili soluzioni a questi problemi consiste nel layer di batch
+ normalization.
+ Come già detto precedentemente, solitamente l’input di una rete viene normalizz
+ato (cioè tutti gli input vengono riscalati per avere valori compresi in
+ un range scelto, solitamente [0,1]) o standardizzato (cioè ai valori degli
+ input gli viene sottratta la media e vengono divisi per la deviazione standard
+ del dataset, per avere dei dati distribuiti con media 0 e deviazione standard
+ 1).
+ Ciò aiuta l’addestramento in quanto riduce il range dinamico dei dati in
+ input a un range fisso, permettendo alla rete di estrarre feature più robuste
+ e più velocemente.
+ Tuttavia se la rete ha un elevato numero di layer, a seconda dei valori
+ dei pesi l’output dei layer potrebbe tornare ad avere range dinamici ampi.
+ Per ovviare a questo problema, si interpone un layer di batch normalization
+ dopo il layer della rete da normalizzare.
+ In questo modo non solo l’input della rete ma anche l’output dei vari layer
+ viene standardizzato.
+ Ogni layer di batch normalization ha due pesi (per ogni batch), un fattore
+ di scala e un bias, che modificano l’output standardizzato permettendo
+ di cambiarne media e deviazione standard.
+ Questi pesi possono venire aggiustati durante l’addestramento.
+ Il termine batch nel nome deriva dal gruppo di dati su cui viene effettuata
+ la normalizzazione nel layer, che in questo caso è appunto un batch utilizzato
+ durante l’addestramento con Stochastic Gradient Descent (SGD).
+ Per implementare la batch normalization:
+\end_layout
+
+\begin_layout Standard
+si trova il valore medio per il batch corrente 
+\begin_inset Formula $B=\{x_{1},...,x_{m}\}$
+\end_inset
+
+, ovvero il valore medio prodotto da un particolare sub-strato della rete,
+ prima di passare dalla funzione di attivazione non-lineare, quindi
+\begin_inset Formula 
+\[
+\mu_{B}=\frac{1}{m}\sum_{i=1}^{m}x_{i}
+\]
+
+\end_inset
+
+si trova la varianza per il batch corrente
+\begin_inset Formula 
+\[
+\sigma_{B}^{2}=\frac{1}{m}\sum_{i=1}^{m}(x_{i}-\mu_{B})^{2}
+\]
+
+\end_inset
+
+si normalizza il valore con l’equazione
+\begin_inset Formula 
+\[
+\widehat{x_{i}}=\frac{x_{i}-\mu_{B}}{\sqrt{\sigma_{B}^{2}+\epsilon}}
+\]
+
+\end_inset
+
+Quindi, ad ogni valore si sottrae la media e si divide per una deviazione
+ standard a cui si aggiunge il valore 
+\begin_inset Formula $ϵ$
+\end_inset
+
+.
+ Il valore 
+\begin_inset Formula $ϵ$
+\end_inset
+
+ è una costante positiva, ad esempio 0.001, che conferisce maggiore stabilità
+ numerica (evita divisioni per zero) e incrementa, di poco, la varianza
+ per ogni batch.
+ Incrementare la varianza ha lo scopo di tenere in considerazione che la
+ varianza della popolazione è maggiore di ogni campione preso dalla popolazione
+ stessa.
+ Il valore normalizzato viene poi moltiplicato per Gamma a sommato al parametro
+ Beta, entrambi parametri che la rete apprenderà in fase di training:
+\begin_inset Formula 
+\begin{equation}
+y_{i}=\gamma\widehat{x_{i}}+\beta
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ è il valore normalizzato prodotto da ogni sub-strato della rete che passerà
+ attraverso la funzione di attivazione, quali Sigmoide, Relu, Tanh ecc ecc.
+ Durante il training il gradiente dovrà propagarsi a ritroso (backpropagation)
+ attraverso questa trasformazione, affinchè Beta e Gamma ricevano il segnale
+ di errore e vengano ottimizzati.
+ La fase di inferenza, rispetto alla fase di training, presenta alcune differenz
+e: la rete, infatti, non viene esposta ad un batch di input ma ad un solo
+ valore di input, per il quale dovrà produrre un output.
+ Se utilizzassimo la medesima tecnica applicata durante il training dovremmo
+ calcolare media e varianza su un singolo valore e non si produrrebbe quindi
+ nessun risultato sensato.
+ Per supearare questo problema, la rete, durante la fase di testing, normalizza
+ i valori di input utilizzando media e varianza stimati durante la fase
+ di training.
+ La Batch normalization si può utilizzare su reti feed forward, come su
+ reti convoluzionali e reti ricorrenti.
+ Per le reti ricorrenti, lstm, gru o vanilla, media e varianza vengono calcolate
+ per ogni step di tempo anzichè per ogni strato.
+ Per le reti convoluzionali media e varianza vengono calcolate per ogni
+ filtro.
+ I vantaggi introdotti dalla batch normalization sono molteplici: 
+\end_layout
+
+\begin_layout Itemize
+Training della rete più veloce 
+\end_layout
+
+\begin_layout Itemize
+Si possono utilizzare tassi di apprendimento più alti 
+\end_layout
+
+\begin_layout Itemize
+L’inizializzazione dei pesi della rete può essere fatta con meno cautela
+ 
+\end_layout
+
+\begin_layout Itemize
+Le funzioni di attivazione quali Sigmoide e Relu sono utilizzabili anche
+ con reti maggiormente profonde 
+\end_layout
+
+\begin_layout Itemize
+Fornisce una sorta di regolarizzazione aggiuntiva e potrebbe ridurre la
+ necessità di Dropout 
+\end_layout
+
+\begin_layout Itemize
+Miglioramento delle Performance in generale
+\end_layout
+
+\begin_layout Subsection
+Early Stopping
+\end_layout
+
+\begin_layout Standard
+Consiste nel monitorare l'errore durante la fase di validazione.
+ Quando alleniamo una rete decidiamo a priori per quante epoche allenarla
+ (un epoca corrisponde a sottoporre alla rete tutto il training set), dopo
+ un certo numero di epoche osserviamo che l'errore di validazione che prima
+ diminuiva inizia ad aumentare, magari oscillando anche, questo è il caso
+ dell'overfitting.
+ Early stopping è metodo parametrizzato da tre fattori, quantità da monitorare,
+ un delta che indica il valore assoluto o percentuale di cambiamento della
+ quantità monitorata per determinare se c'è stato un miglioramento o peggioramen
+to ed infine un parametro patience che determina dopo quante epoche senza
+ miglioramenti fermare l'allenamento.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename earlystopping.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Early stopping
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Regolarizzazione loss function
+\end_layout
+
+\begin_layout Standard
+Le reti neurali, durante il loro processo di apprendimento, sfruttano, come
+ abbiamo visto, la funzione costo per decidere come sistemare i propri parametri
+, ovvero pesi e bias.
+ Abbiamo visto che c'è anche un grande problema, che è quello dell'overfitting.
+ Sono state sviluppate alcune tecniche che, operando sulla funzione costo,
+ aiutano a ridurre gli effetti del sovraallenamento di una rete neurale.
+ Tali tecniche prendono il nome di tecniche di regolarizzazione.
+ Generalmente, tali tecniche prevedono l'aggiunta di un fattore, dipendente
+ dai pesi, dopo l'espressione della funzione costo.
+ Tale fattore ha lo scopo di introdurre un termine di penalità sulla norma
+ di 
+\begin_inset Formula $w$
+\end_inset
+
+ che ha l’effetto di restringere l’insieme entro cui vengono scelti i parametri.
+ Ciò equivale, essenzialmente, ad imporre condizioni di regolarità sulla
+ classe di funzioni realizzata dalla rete.
+ Sia 
+\begin_inset Formula $E_{p}(w)$
+\end_inset
+
+ la funzione costo (o loss function, error function) non regolarizzata,
+ la funzione costo regolarizzata assume la forma:
+\begin_inset Formula 
+\begin{equation}
+E(w)=E_{p}(w)+\gamma||w||
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula $||\bullet||$
+\end_inset
+
+ denota la norma euclidea 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+.
+ Per completezza aggiungiamo che è possibile usare anche altri tipi di norma,
+ ma comunemente le più usate sono la norma 
+\begin_inset Formula $L_{1},L_{2}$
+\end_inset
+
+.
+ Il termine 
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+ è anch'esso un iperparametro.
+ La regolarizzazione può essere vista come un compromesso tra trovare pesi
+ piccoli e minimizzare la funzione costo.
+ Il parametro 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ viene detto tasso di regolarizzazione e serve per determinare il bilanciamento
+ di tale compromesso: quando 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ è piccolo, allora preferiamo minimizzare la funzione costo, mentre quando
+ è grande, cerchiamo di trovare pesi piccoli.
+ La regolarizzazione aiuta le reti neurali a generalizzare meglio, in quanto
+ una rete con pesi piccoli non varia il proprio comportamento se cambiano
+ alcuni dei dati di input.
+ Questo le rende particolarmente difficile memorizzare le peculiarità dei
+ dati, mentre la aiuta ad apprendere meglio quelli che sono i modelli e
+ gli schemi dei dati di allenamento.
+ Il principale problema della regolarizzazione è che non si è ancora capito
+ esattamente il perché essa aiuti a migliorare le prestazioni di una rete
+ neurale, ma abbiamo a disposizione solo evidenze pratiche di questo fatto.
+ Nonostante questo, la regolarizzazione è ampiamente utilizzata e ci aiuta
+ a migliorare le prestazioni delle nostre reti neurali.
+\end_layout
+
+\begin_layout Subsection
+Dropout
+\end_layout
+
+\begin_layout Standard
+La tecnica di dropout invece funziona diversamente, in quanto modifica non
+ la funzione di costo della rete, ma la rete stessa.
+ Abbiamo visto il principio di funzionamento di una rete neurale e come
+ essa riesca ad allenarsi.
+ Ecco, questa tecnica prevede di applicare il solito procedimento togliendo
+ prima una certa percentuale di neuroni in ogni hidden layer! Per ogni epoca
+ di allenamento si sceglie casualmente con una data probabilità (iperparametro)
+ quali neuroni tenere e quali scartare e si allena la rete così ottenuta.
+ Si ripete quindi il procedimento, tenendo e scartando neuroni diversi ad
+ ogni epoca: una volta che si ritiene che la rete sia pronta, si prende
+ la rete originale e si aggiustano i pesi uscenti dai neuroni nascosti:
+ abbiamo ottenuto una rete pronta a svolgere il proprio compito.
+ In poche parole, è come se usassimo tante reti diverse e poi prendessimo
+ come risultato la media di tutti i risultati di queste reti.
+ Va tenuto ben presente che questo procedimento è applicato solo in fase
+ di allenamento: durante il funzionamento vero e proprio, la rete è considerata
+ nella sua interezza.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Droout_.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dropout: ad ogni epoca, poi, faremo in modo di avere una rete diversa ogni
+ volta, considerando neuroni diversi.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Inizializzazione dei pesi
+\end_layout
+
+\begin_layout Standard
+Prima di partire con l'allenamento i pesi vanno inizializzati.
+ Osserviamo che non sappiamo quale sarà il valore finale di ogni peso al
+ termine dell'allenamento, ma se ad esempio normaliziamo i dati di input
+ è ragionevole supporre che circà la metà dei pesi sarà positiva e la metà
+ negativa, quindi con media tendente a zero.
+ 
+\end_layout
+
+\begin_layout Itemize
+Una prima idea di inizializzazione è quella di porre tutti i pesi a zero.
+ Pessima idea, infatti avendo tutti i pesi uguali, ogni neurone calcolerà
+ lo stesso output e lo stesso gradiente, quindi i pesi subiranno tutti gli
+ stessi aggiornamenti e i pesi finali resteranno tutti uguali tra loro.
+ Questo è un problema, supponiamo che la nostra rete sia un classificatore
+ di immagini, avere tutti i pesi uguali significa che ogni pixel di ogni
+ immagine abbia la stessa importanza degli altri, quindi la rete non impara
+ ad estrarre e riconosce nessuna feature.
+\end_layout
+
+\begin_layout Itemize
+Inizializzazione con numeri grandi: anche questa è una pessima idea, a seconda
+ della funzione di attivazione del neurone abbiamo diversi comportamenti
+ ma tutti problematici.
+ Come detto prima, i pesi grandi peggiorano la capacità di generalizzazione
+ della rete, inoltre se usassimo funzioni di attivazione come softmax o
+ tangente iperbolica potremmo essere fin da subito nelle zone di saturazione,
+ zone in cui il gradiente tende a zero bloccando di fatto l'apprendimento.
+\end_layout
+
+\begin_layout Itemize
+Inizializzare i pesi intorno allo zero: abbandonata l'idea di inizializzare
+ con numeri grandi, vogliamo che i pesi siano molto vicini allo zero, non
+ identicamente nulli e distribuiti in modo che circa la metà sia positiva
+ e metà sia negativa.
+ Una pratica comune è inizializzare i pesi campionandoli da una distribuzione
+ gaussiana a media nulla e varianza piccola (0.01).
+ Questo tipo di inizializzazione può andare bene se la rete neurale dispone
+ di pochi strati nascosti, ma in reti neurali più profonde le attivazioni
+ diventano sempre più piccole mano a mano che si processano i vari strati,
+ no ridursi a quantità praticamente nulle.
+ Questo diventa un problema in quanto durante la fase di back propagation
+ il gradiente accumulato continua ad essere moltiplicato per quantità piccolissi
+me che portano alla sua dissolvenza.
+\end_layout
+
+\begin_layout Itemize
+Inizializzazione di Xavier: l'idea è quindi quella di avere una distribuzione
+ delle attivazioni tale che la rete neurale sia in grado di apprendere in
+ maniera efficiente.
+ In quest'ottica, Xavier (2010) ha proposto una inizializzazione dei pesi
+ secondo una normale a media nulla con deviazione standard tale che la varianza
+ delle attivazioni 
+\begin_inset Formula $a^{(k)}$
+\end_inset
+
+ risulti essere unitaria.
+ Sotto l'assunzione di attivazioni lineari e simmetriche (plausibile dal
+ momento che anche la tangente iperbolica ha proprio questo comportamento
+ intorno allo zero) questo si traduce nel rendere unitaria la varianza degli
+ input 
+\begin_inset Formula $z^{(k)}$
+\end_inset
+
+.
+ L'inizializzazione di Xavier va eseguita neurone per neurone a partire
+ dallo strato iniziale, per questo è necessario preproccesare l'input della
+ rete come descritto sopra (input a media nulla e varianza unitaria) quando
+ vogliamo utilizzare questa inizializzazione.
+ Supponiamo di avere un input 
+\begin_inset Formula $X$
+\end_inset
+
+ di dimensione 
+\begin_inset Formula $n$
+\end_inset
+
+ e lo strato, composto da 
+\begin_inset Formula $n$
+\end_inset
+
+ neuroni sia tolamente connesso tramite pesi casuali 
+\begin_inset Formula $W$
+\end_inset
+
+ di dimensione 
+\begin_inset Formula $n\times n$
+\end_inset
+
+, l'output 
+\begin_inset Formula $Y$
+\end_inset
+
+ dell'i-esimo neurone, di dimensione 
+\begin_inset Formula $n$
+\end_inset
+
+ anch'esso sarà:
+\begin_inset Formula 
+\begin{equation}
+Y_{i}=X_{1}W_{i,1}+X_{2}W_{i,2}+...+X_{n}W_{i,n}
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula $i\in[1,n]$
+\end_inset
+
+ e indica l'i-esimo neurone e 
+\begin_inset Formula $W_{i}$
+\end_inset
+
+ il vettore dei pesi associati.
+ La varianza del prodotto di due variabili aleatorie è:
+\begin_inset Formula 
+\[
+Var(W_{i}X_{i})=E[X_{i}]^{2}Var(W_{i})+E[W_{i}]^{2}Var(X_{i})+Var(W_{i})Var(X_{i})
+\]
+
+\end_inset
+
+Per ipotesi sia l'input sia i pesi sono a media nulla, semplificando:
+\begin_inset Formula 
+\[
+Var(W_{i}X_{i})=Var(W_{i})Var(X_{i})
+\]
+
+\end_inset
+
+Inoltre assumiamo che 
+\begin_inset Formula $X_{i},W_{i}$
+\end_inset
+
+ siano indipendenti ed identicamente distribuite (iid), allora:
+\begin_inset Formula 
+\[
+Var(Y_{i})=Var(X_{1}W_{i,1}+X_{2}W_{i,2}+...+X_{n}W_{i,n})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=nVar(W_{i})Var(X_{i})
+\end{equation}
+
+\end_inset
+
+Assumento 
+\begin_inset Formula $Var(X_{1})=1$
+\end_inset
+
+ perché l'input può essere o i dati di allenamento già normalizzati o essere
+ l'output dello strato precedente in cui i pesi sono già stati inizializzati
+ correttamente.
+ Imponiamo quindi:
+\begin_inset Formula 
+\[
+nVar(W_{i})=1
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Var(W_{i})=\frac{1}{n}=\frac{1}{n_{in,i}}
+\]
+
+\end_inset
+
+Quindi in definitiva Xavier propone di inizializzare i pesi campionandoli
+ nel modo seguente:
+\begin_inset Formula 
+\begin{equation}
+W_{i}\sim N(0,\frac{1}{n_{in,i}})
+\end{equation}
+
+\end_inset
+
+Fino ad adesso abbiamo assunto l'ipotesi che la funzione di attivazione
+ sia lineare e simmetrica intorno allo 0.
+ Usando la funzione ReLU cade l'ipotesi di simmetria e la distribuzione
+ va adattata.
+ A tale scopo recentemente è stata proposta l'inizializzazione: 
+\begin_inset Formula 
+\begin{equation}
+W_{i}\sim N(0,\frac{2}{n_{in,i}})
+\end{equation}
+
+\end_inset
+
+Il fattore di correzione 2 ha senso: la ReLU dimezza di fatto gli input,
+ e pertanto bisogna raddoppiare la varianza dei pesi per mantenere la stessa
+ varianza delle attivazioni.
+\end_layout
+
+\begin_layout Itemize
+Glorot & Bengio seguendo un simile ragionamento a quello di Xavier ma applicato
+ alla backpropagation, quindi procedendo a ritroso dall'ultimo strato al
+ primo, invertendo anche il ruolo di input e output, hanno trovato che deve
+ valere:
+\begin_inset Formula 
+\[
+n_{in,i}Var(W_{i})=1
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+n_{out,i}Var(W_{i})=1
+\]
+
+\end_inset
+
+Imporre le due condizioni simultaneamente risulta essere troppo restrittivo,
+ imporrebbe infatti 
+\begin_inset Formula $n_{in,i}=n_{out,i}$
+\end_inset
+
+ che nel caso di una rete feedforward totalmente connessa significa che
+ tutti gli strati hanno la medesima ampiezza e anche in altre tipologie
+ di reti è una forte imposizione sull'architettura.
+ Si è raggiunto un compromesso tra i due vincoli usando una distribuzione
+\begin_inset Formula 
+\begin{equation}
+W_{i}\sim N(0,\frac{2}{n_{in,i}+n_{out,i}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Data augmentation
+\end_layout
+
+\begin_layout Standard
+Si può anche pensare di ampliare artificialmente i dati di allenamento,
+ in quanto ottenere nuovi dati per allenare la rete è sempre una buona idea.
+ Il problema è che non sempre è possibile, oppure è troppo costoso ottenerne
+ di nuovi.
+ Quindi se ne generano di nuovi a partire da quelli che abbiamo già a disposizio
+ne.
+ Ad esempio, se la nostra rete dovesse riconoscere delle cifre scritte a
+ mano, potremmo applicare delle piccole rotazioni o delle lievi dilatazioni
+ o restrizioni ai dati che abbiamo già in possesso, creando delle immagini
+ nuove da fornire alla nostra rete neurale.
+ In generale, si cerca di espandere il set di allenamento cercando di riprodurre
+ quelle che sono le variazioni che di solito hanno nella pratica.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Data_aug.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Data augmentation: Nonostante la differenza sia minima, per l'analisi svolta
+ dalla rete sono due immagini completamente diverse.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Scelte di non linearità
+\end_layout
+
+\begin_layout Standard
+Possiamo ora analizzare più nel dettaglio funzioni di attivazioni accennate
+ nel capitolo 1 avendo ora maggiori conoscienze sull'ottimizzazione.
+\end_layout
+
+\begin_layout Subsection
+Funzione Sigmoide
+\end_layout
+
+\begin_layout Standard
+Tale soluzione è stata progressivamente accantonata negli ultimi anni per
+ via di alcune problematiche che comporta a livello pratico.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename grafico_sig.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Grafico Sigmoide
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(x)=\frac{1}{1+e^{-x}}
+\]
+
+\end_inset
+
+La prima e più importante è quella relativa alla dissolvenza del gradiente
+ in seguito alla saturazione dei neuroni, ossia quei neuroni che presentano
+ valori di output agli estremi del codominio della funzione di attivazione,
+ in questo caso 
+\begin_inset Formula $(0,1)$
+\end_inset
+
+.
+ É facile infatti notare che
+\begin_inset Formula 
+\[
+\lim_{x\rightarrow+\infty}f(x)=1
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lim_{x\rightarrow-\infty}f(x)=0
+\]
+
+\end_inset
+
+Tale saturazione diventa problematica durante le fase di back propagation,
+ in quanto il gradiente locale assume valori prossimi allo zero, che per
+ la regola della catena vanno a moltiplicare tutti i gradienti calcolati
+ in precedenza e quelli successivi, conducendo così all'annullamento del
+ gradiente globale.
+\begin_inset Formula 
+\[
+f'(x)=f(x)(1-f(x))
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lim_{x\rightarrow+\infty}f'(x)=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lim_{x\rightarrow-\infty}f'(x)=0
+\]
+
+\end_inset
+
+In pratica, si ha un fusso utile del gradiente solo per valori di input
+ che rimangono all'interno di una zona di sicurezza, cioè nei dintorni dello
+ zero.
+ Il secondo problema deriva invece dal fatto che gli output della funzione
+ sigmoide non sono centrati intorno allo zero, e di conseguenza gli strati
+ processati successivamente riceveranno anch'essi valori con una distribuzione
+ non centrata sullo zero.
+ Questo infuisce in maniera significativa sulla discesa del gradiente, in
+ quanto gli input in ingresso ai neuroni saranno sempre positivi, e pertanto
+ il gradiente dei pesi associati diventerà, durante la fase di back propagation,
+ sempre positivo o sempre negativo.
+ Tale risultato si traduce in una dinamica a zig-zag negli aggiornamenti
+ dei pesi che rallenta in maniera signicativa il processo di convergenza.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename zigzag gradiente.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Esempio di dinamica a zig-zag nell'aggiornamento di due pesi 
+\begin_inset Formula $W_{1}$
+\end_inset
+
+ e 
+\begin_inset Formula $W_{2}$
+\end_inset
+
+.
+ La freccia blu indica indica l'ipotetico vettore ottimale per la discesa
+ del gradiente, mentre le frecce rosse i passi di aggiornamento compiuti:
+ gradienti tutti dello stesso segno comportano due sole possibili direzioni
+ di aggiornamento.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+É importante comunque notare che una volta che i gradienti delle singole
+ osservazioni vengono sommati all'interno dello stesso batch di dati l'aggiornam
+ento finale dei pesi può avere segni diversi, permettendo quindi di muoversi
+ lungo un insieme più ampio di direzioni.
+ 
+\end_layout
+
+\begin_layout Standard
+Il terzo e ultimo difetto della funzione sigmoide è che l'operazione exp(·)
+ al denominatore è molto costosa dal punto dal punto di vista computazionale,
+ soprattutto rispetto alle alternative che verranno presentate di seguito.
+\end_layout
+
+\begin_layout Subsection
+Tangente iperbolica
+\end_layout
+
+\begin_layout Standard
+Il problema degli output non centrati sullo zero della sigmoide può essere
+ risolto ricorrendo all'utilizzo della tangente iperbolica, la quale presenta
+ codominio (−1, 1) centrato sull'origine degli assi.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename tangente-iperbolica.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Grafico tangente iperbolica
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(x)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
+\]
+
+\end_inset
+
+Tuttavia, rimane il problema della saturazione dei neuroni, anzi viene addirittu
+ra accentuato, dal momento che la zona di sicurezza risulta ancora più ristretta.
+ Rimane anche il problema della complessità computazionale della funzione
+ esponenziale.
+\end_layout
+
+\begin_layout Subsection
+ReLU
+\end_layout
+
+\begin_layout Standard
+La Rectied Linear Unit (ReLU) è diventata popolare negli ultimi anni per
+ via dell'incremento prestazionale che offre nel processo di convergenza:
+ velocizza infatti di circa 6 volte la discesa del gradiente rispetto alle
+ alternative viste finora.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Grafico_relu.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Grafico ReLU
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(x)=x^{+}=max(0,x)
+\]
+
+\end_inset
+
+Questo risultato è da attribuire in larga parte al fatto che la ReLU risolve
+ il problema della dissolvenza del gradiente, non andando a saturare i neuroni.
+ Durante la fase di back propagation infatti, se il gradiente calcolato
+ fino a quel punto è positivo questo viene semplicemente lasciato passare,
+ perchè la derivata locale per il quale viene moltiplicato è pari ad uno.
+\begin_inset Formula 
+\[
+f'(x)=\begin{cases}
+1 & x>0\\
+0 & x<0
+\end{cases}
+\]
+
+\end_inset
+
+
+\series bold
+NB
+\series default
+ durante la back propagation l'input 
+\begin_inset Formula $x$
+\end_inset
+
+ è il gradiente proveniente dagli strati successivi.
+\end_layout
+
+\begin_layout Standard
+Eventuali problemi sorgono invece quando il gradiente accumulato ha segno
+ negativo, in quanto questo viene azzerato (la derivata locale è nulla lungo
+ tutto il semiasse negativo) con la conseguenza che i pesi non vengono aggiornat
+i.
+ Fortunatamente questo problema può essere alleviato attraverso l'utilizzo
+ di un algoritmo SGD: considerando più dati alla volta c'è infatti la speranza
+ che non tutti gli input del batch provochino l'azzeramento del gradiente,
+ tenendo così in vita il processo di apprendimento del neurone.
+ Al contrario, se per ogni osservazione la ReLU riceve valori negativi,
+ allora il neurone "muore", e non c'è speranza che i pesi vengano aggiornati.
+ Valori elevati del learning rate amplicano questo problema, dal momento
+ che cambiamenti più consistenti dei pesi si traducono in una maggiore probabili
+tà che questi affondino nella "zona morta".
+ 
+\end_layout
+
+\begin_layout Subsection
+Leaky ReLU
+\end_layout
+
+\begin_layout Standard
+La leaky ReLU è un tentativo di risolvere il problema della disattivazione
+ dei neuroni comportato dalla ReLU classica, e consiste nell'introdurre
+ una piccola pendenza negativa (di circa 0.01) 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ nella regione dove la ReLU è nulla, dove 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ è costante.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Leaky_relu.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Grafico Leaky ReLU
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(x)=\max(\alpha x,x)
+\]
+
+\end_inset
+
+In alcune varianti, α può essere un parametro da stimare, al pari degli
+ altri pesi della rete (si parla di Parametric ReLU ), oppure una variabile
+ casuale: è il caso della Randomized ReLU, dove ad ogni iterazione la pendenza
+ della parte negativa della funzione viene scelta casualmente all'interno
+ di un range pressato.
+ In alcuni recenti esperimenti, Bing Xu et al.
+ (2015) hanno mostrato come le varianti della ReLU classica siano in grado
+ di aumentare le performance finali del modello in termini di accuratezza,
+ prima su tutte la RReLU, che grazie alla sua natura casuale sembra particolarme
+nte portata alla riduzione del sovradattamento.
+\end_layout
+
+\begin_layout Chapter
+Classificazioni di immagini
+\end_layout
+
+\begin_layout Standard
+La visione artificiale (nota anche come computer vision) è l'insieme dei
+ processi che mirano a creare un modello approssimato del mondo reale (3D)
+ partendo da immagini bidimensionali (2D).
+ Vedere è inteso non solo come l'acquisizione di una fotografia bidimensionale
+ di un'area ma soprattutto come l'interpretazione del contenuto di quell'area.
+ L'informazione è intesa in questo caso come qualcosa che implica una decisione
+ automatica.
+ Un problema classico nella visione artificiale è quello di determinare
+ se l'immagine contiene o no determinati oggetti (Object recognition) o
+ attività.
+ Il problema può essere risolto efficacemente e senza difficoltà per oggetti
+ specifici in situazioni specifiche per esempio il riconoscimento di specifici
+ oggetti geometrici come poliedri, riconoscimento di volti o caratteri scritti
+ a mano.
+ Le cose si complicano nel caso di oggetti arbitrari in situazioni arbitrarie.
+ 
+\end_layout
+
+\begin_layout Standard
+Nella letteratura troviamo differenti varietà del problema:
+\end_layout
+
+\begin_layout Itemize
+Recognition (riconoscimento): uno o più oggetti prespecificati o memorizzati
+ possono essere ricondotti a classi generiche usalmente insieme alla loro
+ posizione 2D o 3D nella scena.
+\end_layout
+
+\begin_layout Itemize
+Identification (identificazione): viene individuata un'istanza specifica
+ di una classe.
+ Es.
+ Identificazione di un volto, impronta digitale o veicolo specifico.
+\end_layout
+
+\begin_layout Itemize
+Detection (rilevamento): l'immagine è scandita fino all'individuazione di
+ una condizione specifica.
+ Es.
+ Individuazione di possibili cellule anormali o tessuti nelle immagini mediche.
+\end_layout
+
+\begin_layout Standard
+Altro compito tipico è la ricostruzione dello scenario: dati 2 o più immagini
+ 2D si tenta di ricostruire un modello 3D dello scenario.
+ Nel caso più semplice si parla di un insieme di singoli punti in uno spazio
+ 3D o intere superfici.
+ Generalmente è importante trovare la matrice fondamentale che rappresenta
+ i punti comuni provenienti da immagini differenti.
+\end_layout
+
+\begin_layout Standard
+Il problema della 
+\series bold
+classificazione di immagini
+\series default
+ è il compito di assegnare ad un'immagine di input una e una sola etichetta
+ proveniente da un insieme fissato di output.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename esempio_classificazione.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Classificazione di un'immagine
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+La classificazione presenta alcuni problemi:
+\end_layout
+
+\begin_layout Itemize
+Variazione punto di vista (Viewpoint variation): una singola istanza di
+ un oggetto può essere orientata in modi diversi rispetto alla camera, producend
+o immagini diverse;
+\end_layout
+
+\begin_layout Itemize
+Variazione scala (Scale variation): oggetti diversi appartenenti alla medesima
+ classe possono differire nelle loro dimensioni reali;
+\end_layout
+
+\begin_layout Itemize
+Deformazione (Deformation): alcuni oggetti non sono corpi rigidi e possono
+ apparire deformati in modi diversi;
+\end_layout
+
+\begin_layout Itemize
+Occlusione (Occlusion): parti dell'oggetto da riconoscere è nascosto e non
+ visibile;
+\end_layout
+
+\begin_layout Itemize
+Condizioni di illuminazione (Illumination conditions): l'illuminazione ha
+ un ruolo decisivo nell'informazione codificata all'interno dei pixel che
+ compongono l'immagine;
+\end_layout
+
+\begin_layout Itemize
+Disordine di sfondo (Background clutter): gli oggetti di interesse possono
+ mescolarsi e confondersi nell'ambiente circostante, rendendo difficile
+ l'identificazione;
+\end_layout
+
+\begin_layout Itemize
+Variazione intra-classe (Intra-class variation): oggetti appartenti alla
+ stessa classe possono differire significativamente l'uno dall'altro.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Problem_image_class.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Problemi nella classificazione di immagini
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Dataset CIFAR-10
+\end_layout
+
+\begin_layout Standard
+In queste note si farà riferimento al dataset CIFAR-10 che consiste in 60000
+ immagini di dimensione 
+\begin_inset Formula $32\times32$
+\end_inset
+
+ pixels, ogni pixel ha associato 3 numeri, uno per ogni colore (RGB).
+ Ogni immagine è etichettata con una di 10 classi, Queste 60000 immagini
+ sono partizionate in 
+\shape italic
+training set
+\shape default
+ di 50000 immagini e 
+\shape italic
+test set
+\shape default
+ di 10000 immagini.
+ Ogni immagine può quindi essere vista come un vettore appartenente allo
+ spazio 
+\begin_inset Formula $\mathbb{R}^{32\times32\times3}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename cifar10.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+CIFAR-10 daset
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Nearest Neighbor Classifier
+\end_layout
+
+\begin_layout Standard
+Questo classificatore non ha nulla a che fare con le reti neurali e non
+ viene quasi mai usato nella pratica, ma ci permetterà di avere un'idea
+ dell'approccio di base a un problema di classificazione delle immagini.
+ L'idea di questo classificatore è molto semplice, la fase di training consiste
+ nel memorizzare tutte le immagini del training set, la classificazione
+ avviene confrontando l'immagine di test con ogni immagine del training
+ set, quindi si etichetta l'immagine in accordo con l'etichetta dell'immagine
+ che più assomiglia.
+ Cosa intendiamo quando diciamo 
+\begin_inset Quotes qld
+\end_inset
+
+
+\shape italic
+che più assomiglia
+\shape default
+
+\begin_inset Quotes qrd
+\end_inset
+
+? Occorre quindi formalizzare questo concetto secondo una qualche metrica.
+ Ogni immagine può essere vista come una matrice in cui ogni elemento è
+ un valore numerico che rappresenta l'intensità di un colore appartenente
+ allo spazio RGB di un singolo pixel.
+ Definiamo quindi tre distanze:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+L1 distance: 
+\begin_inset Formula 
+\begin{equation}
+d_{1}\left(I_{1},I_{2}\right)=\sum_{p}\mid I_{1}^{p}-I_{2}^{p}\mid
+\end{equation}
+
+\end_inset
+
+
+\series default
+la distanza è calcolata sommando il modulo delle differenze elemento per
+ elemento.
+ è anche nota come distanza di Manhattan.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename L1Distance.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+L1 distance
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+L2 distance:
+\series default
+
+\begin_inset Formula 
+\begin{equation}
+d_{2}\left(I_{1},I_{2}\right)=\sqrt{\sum_{p}\left(I_{1}^{p}-I_{2}^{p}\right)^{2}}
+\end{equation}
+
+\end_inset
+
+ è la distanza euclidea classica.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+L
+\begin_inset Formula $_{k}$
+\end_inset
+
+ distance:
+\series default
+
+\begin_inset Formula 
+\begin{equation}
+d_{k}\left(I_{1},I_{2}\right)=\left(\sum_{p}\left(\mid I_{1}-I_{2}\mid\right)^{k}\right)^{\frac{1}{k}}
+\end{equation}
+
+\end_inset
+
+con 
+\begin_inset Formula $k\in[1,+\infty).$
+\end_inset
+
+ E' una generalizzazione delle precedenti.
+\end_layout
+
+\begin_layout Standard
+Le distanze comunemente usate sono le prime due, L1 e L2.
+ In altre parole Nearest Neihbor Classifier è ricondotto ad un problema
+ di minimizzazione riformulando il problema di classificazione come segue:
+\end_layout
+
+\begin_layout Itemize
+chiamiamo 
+\begin_inset Formula $\boldsymbol{x}_{i}$
+\end_inset
+
+ l'i-esima immagine di test (da etichettare);
+\end_layout
+
+\begin_layout Itemize
+chiamiamo 
+\begin_inset Formula $\boldsymbol{x}_{j}$
+\end_inset
+
+ la j-esima immagine del training set (già etichettata);
+\end_layout
+
+\begin_layout Itemize
+chiamiamo 
+\begin_inset Formula $y_{j}$
+\end_inset
+
+ l'etichetta della j-esima immagine del training set;
+\end_layout
+
+\begin_layout Itemize
+poniamo 
+\begin_inset Formula $y_{i}=y_{j^{*}}$
+\end_inset
+
+ con 
+\begin_inset Formula $j^{*}=\mathrm{argmin}\left(d(\boldsymbol{x}_{i},\boldsymbol{x}_{j})\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Da test effettuati risulta che Nearest Neihbor Classifier, usando la distanza
+ L1, ha classificato correttamente il 38,6% delle immagini del dataset CIFAR-10.
+ Un risultato ragguardevole se comparato alla probabilità di una corretta
+ classificazione asseggnando casualmente un'etichetta (10% nel nostro caso)
+ ma ben lontano dalle prestazioni umane e dalle migliori reti neurali convuluzio
+nali.
+ Utilizzando la distanza L2 invece si è ottenuto un'accuratezza del 35,4%.
+ 
+\end_layout
+
+\begin_layout Section
+K-Nearest Neighbor Classifier
+\end_layout
+
+\begin_layout Standard
+Questo classificatore è un estensione del precedente e si basa su un'idea
+ molto semplice: invece di assegnare l'etichetta dell'immagine più vicina
+ (rispetto ad una definita distanza), troviamo le 
+\shape italic
+k
+\shape default
+ immagini più vicine e assegnamo l'etichetta che compare maggiormente nelle
+ 
+\shape italic
+k
+\shape default
+ etichette.
+ In particolare per 
+\begin_inset Formula $k=1$
+\end_inset
+
+ otteniamo Nearest Neihbor Classifier precedente.
+ Intuituivamente un alto valore di 
+\shape italic
+k 
+\shape default
+ha un effetto 
+\begin_inset Quotes qld
+\end_inset
+
+levigante
+\begin_inset Quotes qrd
+\end_inset
+
+ sui confini decisionali e rende il classificatore più resistente ai valori
+ anomali.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename k-NN.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+confronto NN classifier e 5-NN classifier
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ La figura 2.5 mostra un confronto tra K-NN e NN, usando punti bidimensionali
+ come dati da classificare in 3 classi (rosso, blue, verde).
+ Le regioni colorate evidenziano i confini decisionali.
+ Le regioni bianche mostrano punti la cui classificazione è ambigua (per
+ esempio in K-NN nel caso in cui ci sia parità tra due o più classi).
+ Notiamo come nel caso di punti anomali, NN crea piccole isole di probabili
+ previsioni errate, mentre 5-NN smussa queste irregolarità.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+
+\color red
+To-do parlare di overfitting, cross-validation, hyperparameter 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Vantaggi e svantaggi K-NN
+\end_layout
+
+\begin_layout Standard
+Tra i vantaggi si sottolinea:
+\end_layout
+
+\begin_layout Itemize
+Facile da capire e implementare
+\end_layout
+
+\begin_layout Itemize
+Training in tempo costante 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ difatti basta salvare il riferimento al training set.
+\end_layout
+
+\begin_layout Standard
+Tra gli svantaggi si sottolinea:
+\end_layout
+
+\begin_layout Itemize
+Complessità temporale: richiede il confronto di ogni immagine di test con
+ tutte quelle appartenti al trainin set.
+ La complessità dipende linearmente dalla dimensione del training set e
+ test set;
+\end_layout
+
+\begin_layout Itemize
+Elevata complessità spaziale: richiede che tutto il training set sia memorizzato.
+\end_layout
+
+\begin_layout Itemize
+La distanza tra immagini non è sempre signicativa come mostrato dalla seguente
+ immagine.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename distance_image.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Distanza tra immagini, le 3 immagini a sinistra hanno tutte la stessa distanza
+ dall'originale
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+si pone ora il problema di come scegliere il valore k, come scegliere il
+ tipo di distanza da usare.
+ Soluzione 
+\series bold
+cross-validation.
+ 
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+\shape italic
+\color red
+To-Do
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Classificatore Lineare (Linear Classifier)
+\end_layout
+
+\begin_layout Standard
+Un classificatore può anche essere visto come una funzione che associa ad
+ un'immagine 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ un vettore le cui componenti sono il punteggio associato ad ogni classe.
+ Intuitivamente un buon classificatore associa alla classe corretta un punteggio
+ più alto rispetto alle classi incorrette.
+ Più formalmente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathcal{\boldsymbol{F}:\mathbb{\mathbb{\mathbb{R^{\mathrm{\mathit{d}}}}}}\rightarrow}\mathbb{R}^{L}
+\end{equation}
+
+\end_inset
+
+ dove 
+\begin_inset Formula $d$
+\end_inset
+
+ è la dimensione di una immagine (
+\begin_inset Formula $32\times32\times3$
+\end_inset
+
+ nel caso CIFAR-10), 
+\begin_inset Formula $L$
+\end_inset
+
+ è la cardinalità dell'insieme delle etichette.
+ Quindi 
+\begin_inset Formula $\boldsymbol{F}\left(\boldsymbol{\text{𝑥}}\right)$
+\end_inset
+
+ è un vettore 
+\begin_inset Formula $L$
+\end_inset
+
+- dimensionale e la 
+\begin_inset Formula $i$
+\end_inset
+
+-esima componente 
+\begin_inset Formula $s_{i}=\left[\boldsymbol{F}\left(\boldsymbol{\text{𝑥}}\right)\right]_{i}$
+\end_inset
+
+ contiente il punteggio di quanto probabile sia l'appartenenza di 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ alla classe 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Per il momento non abbiamo detto nulla su come è fatta la funzione vettoriale
+ 
+\begin_inset Formula $\mathcal{\boldsymbol{F}:\mathbb{\mathbb{\mathbb{R^{\mathrm{\mathit{d}}}}}}\rightarrow}\mathbb{R}^{L}$
+\end_inset
+
+.
+ Nel classificatore lineare 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ è una funzione lineare:
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{F}\left(\boldsymbol{\text{𝑥}\mid}W,b\right)=W\boldsymbol{x}+b
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula $W\in\mathbb{\mathbb{R}}^{L\times d}$
+\end_inset
+
+ è chiamata 
+\shape italic
+matrice dei pesi
+\shape default
+, 
+\begin_inset Formula $b\in\mathbb{R}^{L}$
+\end_inset
+
+è chiamato 
+\shape italic
+bias
+\shape default
+ e sono entrambi parametri.
+ Prima di essere classificata un'immagine necessita di una pre elaborazione,
+ denominata 
+\shape italic
+unroll
+\shape default
+ che consiste nel espandere la matrice di pixel 
+\begin_inset Formula $I\in\mathbb{R}^{h\times w}$
+\end_inset
+
+ in un vettore 
+\begin_inset Formula $\boldsymbol{x}\in\mathbb{R}^{(h\cdot w\cdot3)}$
+\end_inset
+
+ in cui ogni componente del vettore rappresenta l'intensità di uno specifico
+ colore RGB di un singolo pixel.
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Unrollpicture.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Unroll immagine
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename linear_class.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Linear Classifier
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Il classificatore lineare assegna ad un'immagine di input la classe corrisponden
+te al più alto punteggio: 
+\begin_inset Formula 
+\begin{equation}
+\hat{y_{j}}=arg\max_{i=1,...,L}[s_{j}]_{i}.
+\end{equation}
+
+\end_inset
+
+ Nel caso CIFAR-10 ogni immagine viene trasformata in un vettore di 
+\begin_inset Formula $[3072\times1]$
+\end_inset
+
+, la matrice 
+\begin_inset Formula $W$
+\end_inset
+
+ ha una dimensione di 
+\begin_inset Formula $[10\times3072]$
+\end_inset
+
+, 
+\begin_inset Formula $b$
+\end_inset
+
+ ha dimensione 
+\begin_inset Formula $[10\times1]$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Notiamo che una singola moltiplicazione 
+\begin_inset Formula $W\boldsymbol{x}_{i}$
+\end_inset
+
+ corrisponde (nel caso specifico) a 10 classificazioni parallele, in cui
+ ogni riga della matrice 
+\begin_inset Formula $W$
+\end_inset
+
+ corrisponde a un classificatore, quindi all'importanza che ogni pixel possiede
+ per la i-esima classe.
+ 
+\end_layout
+
+\begin_layout Itemize
+Durante la fase di training abbiamo i dati di input 
+\begin_inset Formula $\left(\boldsymbol{x}_{i},y_{i}\right)$
+\end_inset
+
+ già classificati e fissati, ma noi abbiamo il controllo sui parametri 
+\begin_inset Formula $W,b$
+\end_inset
+
+ e il nostro obiettivo è trovare quei lavori che massimizzano la classificazione
+ corretta.
+\end_layout
+
+\begin_layout Itemize
+Rispetto a Nearest Neihbor Classifier una volta terminata la fase di training
+ il set di immagini di training può essere eliminato, è necessario solo
+ memorizzare i parametri 
+\begin_inset Formula $W,b.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Inoltre questo classificatore lineare coinvolge solo un prodotto matriciale
+ che è molto più veloce del confronto di un'immagine con tutto il training
+ set.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Loss Function
+\end_layout
+
+\begin_layout Standard
+Dopo aver visto formalmente cosa è un Linear Classifier, cioè una funzione
+ lineare 
+\begin_inset Formula $\boldsymbol{F}\left(\boldsymbol{\text{𝑥}\mid}W,b\right)=W\boldsymbol{x}+b$
+\end_inset
+
+, ci poniamo ora il problema di trovare i giusti parametri 
+\begin_inset Formula $W,b$
+\end_inset
+
+ che rendano consistente e migliore la classificazione.
+ Per fare ciò introduciamo una funzione in grado di fornirci una misura
+ di quanto la nostra classificazione sia 
+\begin_inset Quotes fld
+\end_inset
+
+infelice
+\begin_inset Quotes frd
+\end_inset
+
+ (unhappiness), cioè lontana da un risultato corretto.
+ Si tratterà quindi di una funzione dell'input 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ e parametrizzata dai parametri 
+\begin_inset Formula $W,b$
+\end_inset
+
+ che andrà minimizzata.
+ In letteratura è nota come 
+\series bold
+loss function
+\series default
+ (o altre volte 
+\series bold
+cost function
+\series default
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathcal{L}\left(\boldsymbol{x},y_{i}|W,b\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Bias trick
+\end_layout
+
+\begin_layout Standard
+Modifichiamo ora la score function allegerendo la notazione eliminando il
+ termine 
+\begin_inset Formula $\boldsymbol{b}$
+\end_inset
+
+.
+ Richiamiamo la (9) 
+\begin_inset Formula $\boldsymbol{F}\left(\boldsymbol{\text{𝑥}\mid}W,b\right)=W\boldsymbol{x}+b$
+\end_inset
+
+, come evidente risulta scomodo mantenere due set di parametri (il bias
+ 
+\begin_inset Formula $\boldsymbol{b}$
+\end_inset
+
+ e i pesi 
+\begin_inset Formula $W$
+\end_inset
+
+) separati.
+ L'idea è di includere il vettore di bias nella matrice 
+\begin_inset Formula $W$
+\end_inset
+
+.
+ Sia:
+\begin_inset Formula 
+\begin{equation}
+W=\begin{bmatrix}w_{1,1} & w_{1,2} & \cdots & w_{1,n}\\
+w_{2,1} & w_{2,2} & \cdots & w_{2,n}\\
+\vdots & \vdots & \ddots & \vdots\\
+w_{m,1} & w_{m,2} & \cdots & w_{m,n}
+\end{bmatrix},\boldsymbol{x}=\begin{bmatrix}x_{1}\\
+x_{2}\\
+\vdots\\
+x_{n}
+\end{bmatrix},\boldsymbol{b}=\begin{bmatrix}b_{1}\\
+b_{2}\\
+\vdots\\
+b_{n}
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+allora la (9) diventa:
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{F}\left(\boldsymbol{\text{𝑥}\mid}W,b\right)=W\boldsymbol{x}+b=\begin{bmatrix}w_{1,1} & w_{1,2} & \cdots & w_{1,n}\\
+w_{2,1} & w_{2,2} & \cdots & w_{2,n}\\
+\vdots & \vdots & \ddots & \vdots\\
+w_{m,1} & w_{m,2} & \cdots & w_{m,n}
+\end{bmatrix}\cdot\begin{bmatrix}x_{1}\\
+x_{2}\\
+\vdots\\
+x_{n}
+\end{bmatrix}+\begin{bmatrix}b_{1}\\
+b_{2}\\
+\vdots\\
+b_{n}
+\end{bmatrix}=\begin{bmatrix}s_{1}\\
+s_{2}\\
+\vdots\\
+s_{n}
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+ dove 
+\begin_inset Formula $s_{i}$
+\end_inset
+
+ rappresenta il punteggio della classe i-esima.
+ Dalla definizione di prodotto riga per colonna notiamo che la (11) è equivalent
+e a:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}w_{1,1} & w_{1,2} & \cdots & w_{1,n} & b_{1}\\
+w_{2,1} & w_{2,2} & \cdots & w_{2,n} & b_{2}\\
+\vdots & \vdots & \ddots & \vdots & \vdots\\
+w_{m,1} & w_{m,2} & \cdots & w_{m,n} & b_{n}
+\end{bmatrix}\cdot\begin{bmatrix}x_{1}\\
+x_{2}\\
+\vdots\\
+x_{n}\\
+1
+\end{bmatrix}=\begin{bmatrix}s_{1}\\
+s_{2}\\
+\vdots\\
+s_{n}
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+dove abbiamo esteso la matrice 
+\begin_inset Formula $W$
+\end_inset
+
+ aggiungendo una colonna contenente 
+\begin_inset Formula $\boldsymbol{b}$
+\end_inset
+
+ e esteso il vettore 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ aggiungendo 1 in posizione 
+\begin_inset Formula $(n+1)$
+\end_inset
+
+.
+ Rinominando i componenti della matrice 
+\begin_inset Formula $W$
+\end_inset
+
+ giungiamo alla formula definitiva:
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{F}\left(\boldsymbol{\text{𝑥}\mid}W\right)=\begin{bmatrix}w_{1,1} & w_{1,2} & \cdots & w_{1,n} & w_{1,n+1}\\
+w_{2,1} & w_{2,2} & \cdots & w_{2,n} & w_{2,n+1}\\
+\vdots & \vdots & \ddots & \vdots & \vdots\\
+w_{m,1} & w_{m,2} & \cdots & w_{m,n} & w_{m,n+1}
+\end{bmatrix}\cdot\begin{bmatrix}x_{1}\\
+x_{2}\\
+\vdots\\
+x_{n}\\
+1
+\end{bmatrix}=\begin{bmatrix}s_{1}\\
+s_{2}\\
+\vdots\\
+s_{n}
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+nel nostro esempio CIFAR-10, 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ è adesso 
+\begin_inset Formula $[3073\times1]$
+\end_inset
+
+ invece di 
+\begin_inset Formula $[3072\times1]$
+\end_inset
+
+ e 
+\begin_inset Formula $W$
+\end_inset
+
+ è 
+\begin_inset Formula $[10\times3073]$
+\end_inset
+
+ invece di 
+\begin_inset Formula $[10\times3072]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Interpretazione di un Classificatore Lineare.
+\end_layout
+
+\begin_layout Standard
+Linear classifier, data in input una immagine (nel caso più generale dato
+ un generico vettore di dati) calcola il punteggio di una classe come una
+ somma pesata di ogni pixel attraverso tutti e tre i canali colori (RGB).
+ Ogni riga della matrice 
+\begin_inset Formula $W$
+\end_inset
+
+ contiene i pesi per mappare i tre canali colore di ogni pixel nel punteggio
+ di una classe (una riga per classe), quindi in definitiva la funzione lineare
+ ha la capacità di approvare o disapprovare (dipendente dal segno di ciascun
+ 
+\begin_inset Formula $w_{i,j})$
+\end_inset
+
+ un certo colore in una certa posizione.
+ Per esempio, generalmente, un'immagine della classe 
+\begin_inset Quotes qld
+\end_inset
+
+ship
+\begin_inset Quotes qrd
+\end_inset
+
+ ci aspettiamo abbia un'alta presenza di colore blu ai lati dell'immagine,
+ mentre abbia molto meno altri colori.
+\end_layout
+
+\begin_layout Subsubsection
+Interpretazione Geometrica
+\end_layout
+
+\begin_layout Standard
+Poichè trattiamo le nostre immagini di input come vettori colonna possiamo
+ considerare ogni immagine come un punto nello spazio, nell'esempio CIFAR-10
+ lo spazio è 
+\begin_inset Formula $\mathbb{R}^{3072}$
+\end_inset
+
+ (escludendo il bias trick).
+ Inoltre dall'algebra lineare sappiamo che l'equazione generica di un iperpiano
+ (sottospazio affine di 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+ di dimensione 
+\begin_inset Formula $n-1$
+\end_inset
+
+ ) è 
+\begin_inset Formula $\varSigma:a_{1}x_{1}+a_{2}x_{2}+\ldots+a_{n}x_{n}+b=0$
+\end_inset
+
+ che riscritto in forma più compatta: 
+\begin_inset Formula $\varSigma:<\boldsymbol{a},\boldsymbol{x}>+b=0$
+\end_inset
+
+ dove 
+\begin_inset Formula $<\cdot,\cdot>$
+\end_inset
+
+ è il prodotto scalare.
+ Osserviamo che il prodotto 
+\begin_inset Formula $W\boldsymbol{x}$
+\end_inset
+
+ corrisponde a eseguire 
+\begin_inset Formula $m$
+\end_inset
+
+ prodotti scalari, quindi 
+\begin_inset Formula $\boldsymbol{F}\left(\boldsymbol{\text{𝑥}\mid}W,b\right)=W\boldsymbol{x}+b=0$
+\end_inset
+
+ definisce 
+\begin_inset Formula $m$
+\end_inset
+
+ iperpiani nello spazio.
+ Ricordando ora che la distanza di un generico punto 
+\begin_inset Formula $\boldsymbol{P}$
+\end_inset
+
+ da un iperpiano 
+\begin_inset Formula $\varSigma$
+\end_inset
+
+ è: 
+\begin_inset Formula 
+\begin{equation}
+d(\varSigma,\boldsymbol{P})=\frac{|<\boldsymbol{a},\boldsymbol{P}>+b|}{∥\boldsymbol{a}∥}
+\end{equation}
+
+\end_inset
+
+osserviamo che la distanza è direttamente proporzionale al prodotto scalare
+ dei coefficienti dell'iperpiano con il punto (in modulo, il segno determina
+ se siamo 
+\shape italic
+sopra
+\shape default
+ o 
+\shape italic
+sotto
+\shape default
+ l'iperpiano).
+ Possiamo vedere ogni iperpiano come il confine di una regione di accettazione,
+ il punteggio 
+\begin_inset Formula $s_{i}$
+\end_inset
+
+ esprime tramite il segno se siamo nella regione di accettazione o no, e
+ tramite il modulo quanto siamo lontani dal confine, quindi un alto punteggio
+ positivo indica un'alta confidenza che quella immagine apartenga alla classe
+ i-esima, viceversa un alto punteggio negativo indica una bassissima confidenza.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename interpretazione_geometrica.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Interpretazione geomtrica nello spazio bidimensionale
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Template
+\end_layout
+
+\begin_layout Standard
+Un'altra possibile interpretazione per i pesi 
+\begin_inset Formula $W$
+\end_inset
+
+ è che ogni riga della matrice corrisponda a un template (o prototipo) per
+ ogni classe.
+ Il punteggio di ogni classe è ottenuto tramite prodotto scalare e indica
+ il grado di somiglianza tra l'immagine test e il template.
+\end_layout
+
+\begin_layout Subsubsection
+Coming Soon
+\end_layout
+
+\begin_layout Standard
+Fino ad ora non ci siamo posti il problema di come trovare il giusto set
+ di pesi 
+\begin_inset Formula $W$
+\end_inset
+
+, è stato evitato di trattare questo argomento perchè rientra in un discorso
+ più generale che riguarda le reti neurali in generale, non solo applicate
+ al riconoscimento di immagini.
+ Tratteremo approfonditamente Loss Function, error funcion e tecniche di
+ ottimizzazione, infine torneremo al problema di classificazione delle immagini
+ con questi nuovi strumenti e ne vedremo un'applicazione.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Lu, Z., Pu, H., Wang, F., Hu, Z., & Wang, L.
+ (2017).
+ The Expressive Power of Neural Networks: A View from the Width.
+ Neural Information Processing Systems, 6231-6239.
+\end_layout
+
+\end_body
+\end_document
