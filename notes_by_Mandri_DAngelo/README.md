@@ -1,1 +1,0 @@
-# Appunti-reti-neurali
